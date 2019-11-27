@@ -9,8 +9,8 @@ public class Point3D {
 
 	public Point3D(double x, double y, double z) {
 		this.x = new Coordinate(x);
-		this.x = new Coordinate(y);
-		this.x = new Coordinate(z);
+		this.y = new Coordinate(y);
+		this.z = new Coordinate(z);
 	}
 
 	@Override
@@ -33,6 +33,7 @@ public class Point3D {
 	/**
 	 * equal function
 	 */
+	@Override
 	public boolean equals(Object other) {
 		if (x.equals(((Point3D) other).getX())) {
 			if (y.equals(((Point3D) other).getY())) {
@@ -64,7 +65,7 @@ public class Point3D {
 	 * @param other
 	 * @return
 	 */
-	public Point3D addVec(Vector other) {
+	public Point3D add(Vector other) {
 		Point3D temp;
 		temp = new Point3D(this.getX().add(other.getHead().getX()).get(), this.getY().add(other.getHead().getY()).get(),
 				this.getZ().add(other.getHead().getZ()).get());
@@ -77,12 +78,13 @@ public class Point3D {
 	 * @param other
 	 * @return
 	 */
-	public double distanceSQ(Point3D other) {
+	public double distance2(Point3D other) {
 		if (this.equals(other))
 			return 0;
-		double temp = Math.pow(this.getX().subtract(other.getX()).get(), 2)
-				+ Math.pow(this.getY().subtract(other.getY()).get(), 2)
-				+ Math.pow(this.getY().subtract(other.getY()).get(), 2);
+		double a = this.getX().subtract(other.getX()).get();
+		double b = this.getY().subtract(other.getY()).get();
+		double c = this.getZ().subtract(other.getZ()).get();
+		double temp = (a * a) + (b * b) + (c * c);
 		return temp;
 	}
 
@@ -93,7 +95,7 @@ public class Point3D {
 	 * @return
 	 */
 	public double distance(Point3D other) {
-		return Math.sqrt(distanceSQ(other));
+		return Math.sqrt(distance2(other));
 	}
 
 }

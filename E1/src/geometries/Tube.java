@@ -11,7 +11,6 @@ public class Tube extends RadialGeometry {
 		_axisRay = axis;
 	}
 
-
 	@Override
 	public Vector getNormal(Point3D p) {
 		return null;

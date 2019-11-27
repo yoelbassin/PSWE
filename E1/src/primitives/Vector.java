@@ -110,9 +110,11 @@ public class Vector {
 	 * 
 	 * @return
 	 */
-	public double lengthSQ() {
-		double length = Math.pow(this.head.getX().get(), 2) + Math.pow(this.head.getY().get(), 2)
-				+ Math.pow(this.head.getZ().get(), 2);
+	public double length2() {
+		double a = this.head.getX().get();
+		double b = this.head.getY().get();
+		double c = this.head.getZ().get();
+		double length = (a * a) + (b * b) + (c * c);
 		return length;
 	}
 
@@ -122,7 +124,7 @@ public class Vector {
 	 * @return
 	 */
 	public double length() {
-		return Math.sqrt(lengthSQ());
+		return Math.sqrt(length2());
 	}
 
 	/**
@@ -156,9 +158,11 @@ public class Vector {
 	 * 
 	 * @return
 	 */
-	public Vector Normal() {
-		Vector otherHead = new Vector(this.head);
-		otherHead.newNormal();
+	public Vector normalize() {
+		Vector otherHead;
+		double temp;
+		temp = 1 / this.length();
+		otherHead = this.scale(temp);
 		return otherHead;
 	}
 

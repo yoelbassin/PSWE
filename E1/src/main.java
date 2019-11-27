@@ -21,10 +21,7 @@ public class main {
 		 * Constructor for vector 0
 		 */
 		Vector ZeroVector = new Vector(Vector.Zero);
-		Coordinate x = new Coordinate(1);
-		Coordinate y = new Coordinate(2);
-		Coordinate z = new Coordinate(3);
-		Point3D testP1 = new Point3D(x, y, z);
+		Point3D testP1 = new Point3D(1, 2, 3);
 		Vector vec1 = new Vector(testP1);
 		Vector vec2 = new Vector(testP1);
 		Vector vec3 = new Vector(testP1);
@@ -41,14 +38,8 @@ public class main {
 		/**
 		 * orthogonal vectors dot product
 		 */
-		Coordinate a = new Coordinate(2);
-		Coordinate b = new Coordinate(1);
-		Coordinate c = new Coordinate(-1);
-		Coordinate d = new Coordinate(1);
-		Coordinate e = new Coordinate(-2);
-		Coordinate f = new Coordinate(0);
-		Point3D testP2 = new Point3D(a, b, c);
-		Point3D testP3 = new Point3D(d, e, f);
+		Point3D testP2 = new Point3D(2, 1, -1);
+		Point3D testP3 = new Point3D(1, -2, 0);
 		vec1 = new Vector(testP2);
 		vec2 = new Vector(testP3);
 		double dotproduct = vec1.dotProduct(vec2);
@@ -56,15 +47,15 @@ public class main {
 	}
 
 	public static void Point3dTest() {
-		Coordinate x = new Coordinate(1);
-		Coordinate y = new Coordinate(2);
-		Coordinate z = new Coordinate(3);
-		Point3D testP1 = new Point3D(x, y, z);
+		Point3D testP1 = new Point3D(1, 2, 3);
+		Point3D testP2 = new Point3D(1, 1, 1);
+		Point3D testP3 = new Point3D(0, 0, 0);
 		/**
 		 * distance from a point to itself
 		 */
 		double a = testP1.distance(testP1);
 		System.out.println(a);
+		System.out.println(testP2.distance(testP3));
 	}
 
 }
