@@ -5,7 +5,7 @@ public class Ray {
 	private Point3D p;
 
 	public Ray(Vector vec, Point3D p) {
-		
+
 		this.vec = vec.Normal();
 		this.p = p;
 	}

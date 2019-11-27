@@ -6,12 +6,12 @@ public class Vector {
 
 	Point3D head;
 
-	final public static Point3D Zero = new Point3D(Coordinate.ZERO, Coordinate.ZERO, Coordinate.ZERO);
+	final public static Point3D Zero = new Point3D(0, 0, 0);
 
 	public Vector(Point3D head) {
-		
-			if (!head.equals(Zero))
-				this.head = head;
+
+		if (!head.equals(Zero))
+			this.head = head;
 	}
 
 	public Point3D getHead() {
@@ -40,8 +40,8 @@ public class Vector {
 	public Vector add(Vector other) {
 		Point3D temp;
 		Vector Otherhead;
-		temp = new Point3D(this.head.getX().add(other.getHead().getX()), this.head.getY().add(other.getHead().getY()),
-				this.head.getZ().add(other.getHead().getZ()));
+		temp = new Point3D(this.head.getX().add(other.getHead().getX()).get(),
+				this.head.getY().add(other.getHead().getY()).get(), this.head.getZ().add(other.getHead().getZ()).get());
 		Otherhead = new Vector(temp);
 		return Otherhead;
 	}
@@ -55,8 +55,9 @@ public class Vector {
 	public Vector sub(Vector other) {
 		Point3D temp;
 		Vector Otherhead;
-		temp = new Point3D(this.head.getX().subtract(other.getHead().getX()),
-				this.head.getY().subtract(other.getHead().getY()), this.head.getZ().subtract(other.getHead().getZ()));
+		temp = new Point3D(this.head.getX().subtract(other.getHead().getX()).get(),
+				this.head.getY().subtract(other.getHead().getY()).get(),
+				this.head.getZ().subtract(other.getHead().getZ()).get());
 		Otherhead = new Vector(temp);
 		return Otherhead;
 	}
@@ -85,22 +86,19 @@ public class Vector {
 
 		Point3D temp;
 		Vector tempVec;
-		Coordinate newX;
-		Coordinate newY;
-		Coordinate newZ;
+		double newX;
+		double newY;
+		double newZ;
 		Coordinate thisX = new Coordinate(this.getHead().getX());
 		Coordinate thisY = new Coordinate(this.getHead().getY());
 		Coordinate thisZ = new Coordinate(this.getHead().getZ());
 		Coordinate otherX = new Coordinate(other.getHead().getX());
 		Coordinate otherY = new Coordinate(other.getHead().getY());
 		Coordinate otherZ = new Coordinate(other.getHead().getZ());
-		
-		newX = thisY.multiply(otherZ)
-				.subtract(thisZ.multiply(otherY));
-		newY = thisZ.multiply(otherX)
-				.subtract(thisX.multiply(otherZ));
-		newZ = thisX.multiply(otherY)
-				.subtract(thisY.multiply(otherZ));
+
+		newX = thisY.multiply(otherZ).subtract(thisZ.multiply(otherY)).get();
+		newY = thisZ.multiply(otherX).subtract(thisX.multiply(otherZ)).get();
+		newZ = thisX.multiply(otherY).subtract(thisY.multiply(otherZ)).get();
 		temp = new Point3D(newX, newY, newZ);
 		tempVec = new Vector(temp);
 		return tempVec;
@@ -136,7 +134,8 @@ public class Vector {
 	public Vector scale(double num) {
 		Point3D temp;
 		Vector Otherhead;
-		temp = new Point3D(this.head.getX().scale(num), this.head.getY().scale(num), this.head.getZ().scale(num));
+		temp = new Point3D(this.head.getX().scale(num).get(), this.head.getY().scale(num).get(),
+				this.head.getZ().scale(num).get());
 		Otherhead = new Vector(temp);
 		return Otherhead;
 	}

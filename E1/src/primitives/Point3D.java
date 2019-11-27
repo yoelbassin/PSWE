@@ -7,15 +7,15 @@ public class Point3D {
 	private Coordinate y;
 	private Coordinate z;
 
-	public Point3D(Coordinate x, Coordinate y, Coordinate z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public Point3D(double x, double y, double z) {
+		this.x = new Coordinate(x);
+		this.x = new Coordinate(y);
+		this.x = new Coordinate(z);
 	}
 
 	@Override
 	public String toString() {
-		return "(" + x.toString() + "," + y.toString() + ","+ z.toString() + ")";
+		return "(" + x.toString() + "," + y.toString() + "," + z.toString() + ")";
 	}
 
 	public Coordinate getX() {
@@ -52,8 +52,8 @@ public class Point3D {
 	public Vector subtract(Point3D other) {
 		Point3D temp;
 		Vector vec;
-		temp = new Point3D(other.getX().subtract(this.getX()), other.getY().subtract(this.getY()),
-				other.getZ().subtract(this.getZ()));
+		temp = new Point3D(other.getX().subtract(this.getX()).get(), other.getY().subtract(this.getY()).get(),
+				other.getZ().subtract(this.getZ()).get());
 		vec = new Vector(temp);
 		return vec;
 	}
@@ -66,10 +66,11 @@ public class Point3D {
 	 */
 	public Point3D addVec(Vector other) {
 		Point3D temp;
-		temp = new Point3D(this.getX().add(other.getHead().getX()), this.getY().add(other.getHead().getY()),
-				this.getZ().add(other.getHead().getZ()));
+		temp = new Point3D(this.getX().add(other.getHead().getX()).get(), this.getY().add(other.getHead().getY()).get(),
+				this.getZ().add(other.getHead().getZ()).get());
 		return temp;
 	}
+
 	/**
 	 * Squared distance
 	 * 
