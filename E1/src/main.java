@@ -34,7 +34,6 @@ public class main {
 		/**
 		 * subtract to vector 0
 		 */
-		vec2 = (vec2.sub(vec2));
 
 		/**
 		 * orthogonal vectors dot product

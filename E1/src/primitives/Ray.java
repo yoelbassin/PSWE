@@ -14,7 +14,7 @@ public class Ray {
 		return vec;
 	}
 
-	public Point3D getPoint3D() {
+	public Point3D getHead() {
 		return p;
 	}
 
@@ -26,6 +26,12 @@ public class Ray {
 			}
 		}
 		return false;
+	}
+
+	public Ray scale(double num) {
+		Vector newVec = vec.scale(num);
+		Ray scaledRay = new Ray(newVec, p);
+		return scaledRay;
 	}
 
 	@Override
