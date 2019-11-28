@@ -7,17 +7,38 @@ public class Point3D {
 	private Coordinate y;
 	private Coordinate z;
 
+	/***********
+	 * C'ctor********* Convenient double c'ctor.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
 	public Point3D(double x, double y, double z) {
 		this.x = new Coordinate(x);
 		this.y = new Coordinate(y);
 		this.z = new Coordinate(z);
 	}
 
-	@Override
-	public String toString() {
-		return "(" + x.toString() + "," + y.toString() + "," + z.toString() + ")";
+	/************
+	 * C'ctor **************** build a point3D from three Coordinates.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+	public Point3D(Coordinate x, Coordinate y, Coordinate z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 
+	@Override
+	public String toString() {
+		return "(" + x + "," + y + "," + z + ")";
+	}
+
+	/********* Getters************* */
 	public Coordinate getX() {
 		return x;
 	}
@@ -45,10 +66,10 @@ public class Point3D {
 	}
 
 	/**
-	 * Subtract function
+	 * Subtract function Vector a ; a.subtract(other) result a-other (Point3D)
 	 * 
-	 * @param other
-	 * @return
+	 * @param other , type Vector
+	 * @return the equivalent Vector
 	 */
 	public Vector subtract(Point3D other) {
 		Point3D temp;
@@ -60,10 +81,10 @@ public class Point3D {
 	}
 
 	/**
-	 * add function
+	 * add Vector function .
 	 * 
-	 * @param other
-	 * @return
+	 * @param other , type Vector
+	 * @return the equivalent point.
 	 */
 	public Point3D add(Vector other) {
 		Point3D temp;
@@ -75,8 +96,8 @@ public class Point3D {
 	/**
 	 * Squared distance
 	 * 
-	 * @param other
-	 * @return
+	 * @param other , type Point3D
+	 * @return the square distance between points.
 	 */
 	public double distance2(Point3D other) {
 		if (this.equals(other))
@@ -89,10 +110,10 @@ public class Point3D {
 	}
 
 	/**
-	 * distance
+	 * actual distance between points.
 	 * 
-	 * @param other
-	 * @return
+	 * @param other , type Point3D
+	 * @return the
 	 */
 	public double distance(Point3D other) {
 		return Math.sqrt(distance2(other));
