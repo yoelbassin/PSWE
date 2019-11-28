@@ -142,16 +142,6 @@ public class Vector {
 		return Otherhead;
 	}
 
-	/**
-	 * normalize vector to new vector
-	 */
-	public void newNormal() {
-		double temp;
-		Vector Otherhead;
-		temp = 1 / this.length();
-		Otherhead = this.scale(temp);
-		this.head = Otherhead.head;
-	}
 
 	/**
 	 * normalize vector
