@@ -14,6 +14,13 @@ public class Vector {
 			this.head = head;
 	}
 
+	public Vector(double x, double y, double z) {
+		Point3D HeadPoint = new Point3D(x, y, z);
+		if (!HeadPoint.equals(Zero))
+			HeadPoint = new Point3D(x, y, z);
+		this.head = HeadPoint;
+	}
+
 	public Point3D getHead() {
 		return head;
 	}
@@ -52,7 +59,7 @@ public class Vector {
 	 * @param other
 	 * @return
 	 */
-	public Vector sub(Vector other) {
+	public Vector subtract(Vector other) {
 		Point3D temp;
 		Vector Otherhead;
 		temp = new Point3D(this.head.getX().subtract(other.getHead().getX()).get(),
@@ -141,7 +148,6 @@ public class Vector {
 		Otherhead = new Vector(temp);
 		return Otherhead;
 	}
-
 
 	/**
 	 * normalize vector

@@ -30,6 +30,6 @@ public class Ray {
 
 	@Override
 	public String toString() {
-		return "Ray [vec=" + vec.toString() + ", p=" + p.toString() + "]";
+		return "from " + p.toString() + " to " + vec.toString();
 	}
 }
