@@ -13,7 +13,13 @@ public class Cylinder extends Tube {
 
 	@Override
 	public Vector getNormal(Point3D p) {
-		return null;
+		Point3D basePoint = super.get_axisRay().getBasePoint();
+		Point3D topPoint = basePoint.add(super.get_axisRay().getVector().scale(_height));
+		if(p.distance(basePoint) < super.getRadius() || p.distance(topPoint) < super.getRadius())
+		{
+			return super.get_axisRay().getVector();
+		}
+		return super.getNormal(p);
 	}
 
 }
