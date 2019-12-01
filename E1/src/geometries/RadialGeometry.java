@@ -8,11 +8,6 @@ public abstract class RadialGeometry implements Geometry {
 		this._radius = _radius;
 	}
 
-//copy c'ctor
-	public RadialGeometry(RadialGeometry copy) {
-		_radius = copy._radius;
-	}
-
 	// get radius.
 	public double getRadius() {
 		return _radius;
