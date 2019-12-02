@@ -114,7 +114,7 @@ public class Vector {
 		Coordinate otherZ = new Coordinate(other.getHead().getZ());
 		newX = ((thisY.multiply(otherZ)).subtract(thisZ.multiply(otherY))).get();
 		newY = ((thisZ.multiply(otherX)).subtract(thisX.multiply(otherZ))).get();
-		newZ = ((thisX.multiply(otherY)).subtract(thisY.multiply(otherZ))).get();
+		newZ = ((thisX.multiply(otherY)).subtract(thisY.multiply(otherX))).get();
 		temp = new Point3D(newX, newY, newZ);
 		tempVec = new Vector(temp);
 		return tempVec;

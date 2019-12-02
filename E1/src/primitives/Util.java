@@ -61,6 +61,7 @@ public abstract class Util {
 		return deltaExp < ACCURACY ? lhs : lhs * factor;
 	}
 
+
 	public static boolean isZero(double number) {
 		return getExp(number) < ACCURACY;
 	}
