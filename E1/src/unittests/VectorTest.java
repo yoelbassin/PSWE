@@ -45,7 +45,6 @@ public class VectorTest {
 		Vector vec1 = new Vector(2, 1, -1);
 		Vector vec2 = new Vector(1, -2, 0);
 		double dot = vec1.dotProduct(vec2);
-		System.out.println(vec1.dotProduct(vec2));
 		assertEquals(0, dot, 0);
 	}
 
