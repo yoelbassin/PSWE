@@ -11,17 +11,23 @@ public class Polygon implements Geometry {
 	Plane _plane;
 
 	public Polygon(Point3D... points) {
+		if(points.length < 3)
+			throw new ArithmeticException();
 		_points = new ArrayList<>();
 		_plane = new Plane(points[0], points[1], points[2]);
 		Vector normal = _plane.getNormal(null);
 		for (int i = 0; i < points.length; ++i) {
 			_points.add(points[i]);
-			if (i > 2 && !isZero(points[0].subtract(points[i]).dotProduct(normal)))
+			if (points.length < 3 || (i > 2 && !isZero(points[0].subtract(points[i]).dotProduct(normal))))
 				throw new IllegalArgumentException();
 		}
 	}
 
 	public Vector getNormal(Point3D p) {
 		return _plane.getNormal(p);
+	}
+	
+	public Vector getNormal() {
+		return _plane.getNormal();
 	}
 }

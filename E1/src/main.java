@@ -10,11 +10,23 @@
  */
 
 import primitives.*;
+import geometries.*;
 
 public class main {
 	public static void main(String args[]) {
-		VectorTest();
-		Point3dTest();
+		// VectorTest();
+		// Point3dTest();
+		//TubeTest();
+		TriangleTest();
+	}
+
+	public static void TriangleTest() {
+		Point3D a = new Point3D(1, 0, 0);
+		Point3D b = new Point3D(1, 1, 1);
+		Point3D c = new Point3D(0, 1, 1);
+		Point3D d = new Point3D(0,1,-1);
+		Triangle t = new Triangle(a, b, c);
+		System.out.println(t.getNormal());
 	}
 
 	public static void VectorTest() {
@@ -44,6 +56,8 @@ public class main {
 		vec2 = new Vector(testP3);
 		double dotproduct = vec1.dotProduct(vec2);
 		System.out.println(dotproduct);
+		Vector a = new Vector(1, 1, 1);
+		System.out.println(a.length());
 	}
 
 	public static void Point3dTest() {
@@ -56,6 +70,17 @@ public class main {
 		double a = testP1.distance(testP1);
 		System.out.println(a);
 		System.out.println(testP2.distance(testP3));
+	}
+
+	public static void TubeTest() {
+		Vector vec = new Vector(0, 0, 1);
+		Point3D p = new Point3D(5, 5, 0);
+		Ray ray = new Ray(vec, p);
+		Tube tube = new Tube(ray, -5);
+		Point3D a = new Point3D(10, 5, 3);
+		Vector an = new Vector(a);
+		System.out.println(tube.getNormal(a));
+
 	}
 
 }

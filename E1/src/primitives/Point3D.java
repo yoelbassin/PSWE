@@ -56,13 +56,12 @@ public class Point3D {
 	 */
 	@Override
 	public boolean equals(Object other) {
-		if (x.equals(((Point3D) other).getX())) {
-			if (y.equals(((Point3D) other).getY())) {
-				if (z.equals(((Point3D) other).getZ()))
-					return true;
-			}
+		if (x.equals(((Point3D) other).getX()) && y.equals(((Point3D) other).getY())
+				&& z.equals(((Point3D) other).getZ())) {
+			return true;
 		}
 		return false;
+
 	}
 
 	/**

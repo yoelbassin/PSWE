@@ -19,6 +19,9 @@ public class Vector {
 
 		if (!head.equals(Zero))
 			this.head = head;
+		else {
+			throw new IllegalArgumentException("Zero Vector");
+		}
 	}
 
 	public Vector(double x, double y, double z) {
@@ -35,7 +38,7 @@ public class Vector {
 
 	@Override
 	public boolean equals(Object other) {
-		if (head.equals(other)) {
+		if (this.getClass() == other.getClass() && head.equals(((Vector) other).getHead())) {
 			return true;
 		}
 		return false;

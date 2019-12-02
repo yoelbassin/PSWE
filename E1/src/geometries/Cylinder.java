@@ -7,7 +7,11 @@ public class Cylinder extends Tube {
 
 	public Cylinder(double _radius, double _height, Ray _axis) {
 		super(_axis, _radius);
-		this._height = _height;
+		if (_height > 0)
+			this._height = _height;
+		else {
+			throw new IllegalArgumentException("0");
+		}
 		// TODO Auto-generated constructor stub
 	}
 
