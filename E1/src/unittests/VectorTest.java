@@ -37,7 +37,7 @@ public class VectorTest {
 		Vector vec = new Vector(1, 1, 1);
 		Vector vec2 = new Vector(2, 2, 2);
 		Vector vec3 = new Vector(3, 3, 3);
-		assertEquals(vec, vec2.subtract(vec3));
+		assertEquals(vec, vec3.subtract(vec2));
 	}
 
 	@Test

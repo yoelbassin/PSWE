@@ -112,10 +112,18 @@ public class Vector {
 		Coordinate otherX = new Coordinate(other.getHead().getX());
 		Coordinate otherY = new Coordinate(other.getHead().getY());
 		Coordinate otherZ = new Coordinate(other.getHead().getZ());
-
-		newX = thisY.multiply(otherZ).subtract(thisZ.multiply(otherY)).get();
-		newY = thisZ.multiply(otherX).subtract(thisX.multiply(otherZ)).get();
-		newZ = thisX.multiply(otherY).subtract(thisY.multiply(otherZ)).get();
+		newX = ((thisY.multiply(otherZ)).subtract(thisZ.multiply(otherY))).get();
+		System.out.println(newX);
+		System.out.println(thisZ.multiply(otherY));
+		System.out.println(thisY.multiply(otherZ));
+		newY = ((thisZ.multiply(otherX)).subtract(thisX.multiply(otherZ))).get();
+		System.out.println(newY);
+		System.out.println(thisX.multiply(otherZ));
+		System.out.println(thisZ.multiply(otherX));
+		newZ = ((thisX.multiply(otherY)).subtract(thisY.multiply(otherZ))).get();
+		System.out.println(newZ);
+		System.out.println(thisX.multiply(otherY));
+		System.out.println(thisY.multiply(otherZ));
 		temp = new Point3D(newX, newY, newZ);
 		tempVec = new Vector(temp);
 		return tempVec;

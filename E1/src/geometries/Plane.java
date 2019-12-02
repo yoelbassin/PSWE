@@ -18,7 +18,7 @@ public class Plane implements Geometry {
 		double c = _p3.distance(_p1);
 		if ((a + b > c) && (b + c > a) && (a + c > b)) {
 			this._p = _p1;
-			this._normal = _p2.subtract(_p1).crossProduct(_p3.subtract(_p1)).normalize();
+			this._normal = ((_p3.subtract(_p1)).crossProduct(_p2.subtract(_p1))).normalize();
 		} else {
 			throw new IllegalArgumentException("not a plane");
 		}

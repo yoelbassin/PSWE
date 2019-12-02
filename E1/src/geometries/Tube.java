@@ -30,7 +30,7 @@ public class Tube extends RadialGeometry {
 		double centerLength = Math.sqrt(a - _radius * _radius);
 		Vector newVec = _axisRay.getVector().scale(centerLength);
 		Point3D center = basePoint.add(newVec);
-		return center.subtract(p).normalize();
+		return p.subtract(center).normalize();
 	}
 
 }

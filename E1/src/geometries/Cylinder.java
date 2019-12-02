@@ -10,7 +10,7 @@ public class Cylinder extends Tube {
 		if (_height > 0)
 			this._height = _height;
 		else {
-			throw new IllegalArgumentException("0");
+			throw new IllegalArgumentException("Radius is smaller than zero");
 		}
 		// TODO Auto-generated constructor stub
 	}
@@ -19,7 +19,9 @@ public class Cylinder extends Tube {
 	public Vector getNormal(Point3D p) {
 		Point3D basePoint = super.get_axisRay().getBasePoint();
 		Point3D topPoint = basePoint.add(super.get_axisRay().getVector().scale(_height));
-		if (p.distance(basePoint) <= super.getRadius() || p.distance(topPoint) <= super.getRadius()) {
+		if(p.distance(topPoint) == super.getRadius() || p.distance(basePoint) == super.getRadius())
+			throw new ArithmeticException("no normal in point");
+		if (p.distance(basePoint) < super.getRadius() || p.distance(topPoint) < super.getRadius()) {
 			return super.get_axisRay().getVector();
 		}
 		return super.getNormal(p);

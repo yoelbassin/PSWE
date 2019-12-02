@@ -20,13 +20,9 @@ public class PolygonTest {
 		Point3D p2 = new Point3D(0, 3, 0);
 		Point3D p3 = new Point3D(4, 0, 0);
 		Polygon polygon = new Polygon(p1, p2, p3);
-		Point3D normal = new Point3D(0,1,0);
-		assertEquals(polygon.getNormal(), normal);
+		Vector normal = new Vector(0, 0, 1);
+		assertEquals(normal, polygon.getNormal());
 	}
 
-	@Test
-	public void testGetNormal() {
-		fail("Not yet implemented");
-	}
 
 }

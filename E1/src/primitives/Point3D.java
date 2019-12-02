@@ -73,8 +73,8 @@ public class Point3D {
 	public Vector subtract(Point3D other) {
 		Point3D temp;
 		Vector vec;
-		temp = new Point3D(other.getX().subtract(this.getX()).get(), other.getY().subtract(this.getY()).get(),
-				other.getZ().subtract(this.getZ()).get());
+		temp = new Point3D(this.getX().subtract(other.getX()).get(), this.getY().subtract(other.getY()).get(),
+				this.getZ().subtract(other.getZ()).get());
 		vec = new Vector(temp);
 		return vec;
 	}
