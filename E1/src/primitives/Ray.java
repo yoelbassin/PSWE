@@ -1,34 +1,39 @@
 package primitives;
 
 public class Ray {
-	private Vector vec;
+	private Vector dir;
 	private Point3D p;
 
-	/**
-	 * *********** c'ctor ***********
+	// ***************** Constructors ********************** //
+	/*
 	 * 
 	 * @param vec , direction Vector.
-	 * @param p   , a point on the Ray
+	 * 
+	 * @param p , a point on the Ray
 	 */
 	public Ray(Vector vec, Point3D p) {
 
-		this.vec = vec.normalize();
+		this.dir = vec.normalized();
 		this.p = p;
 	}
 
-	/************** Getters ************* */
-	public Vector getVector() {
-		return vec;
+	// ***************** Getters ********************** //
+	public Vector getDir() {
+		return dir;
 	}
 
 	public Point3D getBasePoint() {
 		return p;
 	}
 
+	// ***************** Administration ******************** //
+	/**
+	 * equal function
+	 */
 	@Override
 	public boolean equals(Object other) {
 		if (p.equals(other)) {
-			if (vec.equals(other)) {
+			if (dir.equals(other)) {
 				return true;
 			}
 		}
@@ -37,6 +42,6 @@ public class Ray {
 
 	@Override
 	public String toString() {
-		return "from " + p + " to " + vec;
+		return "from " + p + " to " + dir;
 	}
 }
