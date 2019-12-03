@@ -10,11 +10,17 @@ public class TubeTest {
 	public static Vector vec = new Vector(0, 1, 0);
 	public static Ray asix = new Ray(vec, basePoint);
 
+	/**
+	 * @exception Creates tube with radius smaller (or equal) than 0
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testTube() {
 		Tube tube = new Tube(asix, 0);
 	}
 
+	/**
+	 * Get normal function of tube test
+	 */
 	@Test
 	public void testTubeNormal() {
 		Tube tube = new Tube(asix, 1);
@@ -22,5 +28,5 @@ public class TubeTest {
 		Vector actual = new Vector(1, 0, 0);
 		assertEquals(tube.getNormal(p), actual);
 	}
-	
+
 }

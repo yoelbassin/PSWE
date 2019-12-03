@@ -11,7 +11,7 @@ public class Polygon implements Geometry {
 	Plane _plane;
 
 	public Polygon(Point3D... points) {
-		if(points.length < 3)
+		if (points.length < 3)
 			throw new ArithmeticException();
 		_points = new ArrayList<>();
 		_plane = new Plane(points[0], points[1], points[2]);
@@ -26,7 +26,7 @@ public class Polygon implements Geometry {
 	public Vector getNormal(Point3D p) {
 		return _plane.getNormal(p);
 	}
-	
+
 	public Vector getNormal() {
 		return _plane.getNormal();
 	}

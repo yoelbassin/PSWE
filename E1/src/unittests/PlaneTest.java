@@ -6,7 +6,9 @@ import primitives.*;
 import org.junit.Test;
 
 public class PlaneTest {
-
+	/**
+	 * plane with same point in constractor
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testPlaneZero() {
 		Point3D p1 = new Point3D(0, 0, 0);
@@ -15,6 +17,9 @@ public class PlaneTest {
 		Plane plane = new Plane(p1, p2, p3);
 	}
 
+	/**
+	 * test of get normal function 
+	 */
 	@Test
 	public void testGetNormal() {
 		Point3D p = new Point3D(0, 0, 0);

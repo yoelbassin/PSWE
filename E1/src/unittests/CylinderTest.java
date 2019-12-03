@@ -12,11 +12,17 @@ public class CylinderTest {
 	public static Vector vec = new Vector(0, 1, 0);
 	public static Ray asix = new Ray(vec, basePoint);
 
+	/**
+	 * Creating Cylinder with radius smaller than 0 (or equal)
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testCylinder() {
 		Cylinder cylinder = new Cylinder(1, 0, asix);
 	}
 
+	/**
+	 * Cylinder normal function test
+	 */
 	@Test
 	public void testCylinderNormal() {
 		Cylinder cylinder = new Cylinder(1, 5, asix);
@@ -25,6 +31,9 @@ public class CylinderTest {
 		assertEquals(expected, cylinder.getNormal(p));
 	}
 
+	/**
+	 * normal on the bases of the cylinder
+	 */
 	@Test
 	public void testCylinderBaseNormal() {
 		Cylinder cylinder = new Cylinder(1, 5, asix);
@@ -33,6 +42,9 @@ public class CylinderTest {
 		assertEquals(cylinder.getNormal(p), actual);
 	}
 
+	/**
+	 * normal on the perimeter of the base of the normal
+	 */
 	@Test(expected = ArithmeticException.class)
 	public void testCylinderBaseRadiusNormal() {
 		Cylinder cylinder = new Cylinder(1, 5, asix);

@@ -1,4 +1,4 @@
-	package unittests;
+package unittests;
 
 import static org.junit.Assert.*;
 import primitives.*;
@@ -7,6 +7,9 @@ import org.junit.Test;
 
 public class PolygonTest {
 
+	/**
+	 * @exception try to build a polygon with two vertex .
+	 */
 	@Test(expected = ArithmeticException.class)
 	public void testPolygon() {
 		Point3D p1 = new Point3D(1, 1, 1);
@@ -14,6 +17,9 @@ public class PolygonTest {
 		Polygon polygon = new Polygon(p1, p2);
 	}
 
+	/**
+	 * Create a polygon. The test will succeed if the normal calculation is right
+	 */
 	@Test
 	public void testGetNormalPoint3D() {
 		Point3D p1 = new Point3D(0, 0, 0);
@@ -23,6 +29,4 @@ public class PolygonTest {
 		Vector normal = new Vector(0, 0, 1);
 		assertEquals(normal, polygon.getNormal());
 	}
-
-
 }

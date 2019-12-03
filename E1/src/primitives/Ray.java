@@ -4,11 +4,12 @@ public class Ray {
 	private Vector vec;
 	private Point3D p;
 
-	/**
-	 * *********** c'ctor ***********
+	// ***************** Constructors ********************** //
+	/*
 	 * 
 	 * @param vec , direction Vector.
-	 * @param p   , a point on the Ray
+	 * 
+	 * @param p , a point on the Ray
 	 */
 	public Ray(Vector vec, Point3D p) {
 
@@ -16,7 +17,7 @@ public class Ray {
 		this.p = p;
 	}
 
-	/************** Getters ************* */
+	// ***************** Getters ********************** //
 	public Vector getVector() {
 		return vec;
 	}
@@ -25,6 +26,10 @@ public class Ray {
 		return p;
 	}
 
+	// ***************** Administration ******************** //
+	/**
+	 * equal function
+	 */
 	@Override
 	public boolean equals(Object other) {
 		if (p.equals(other)) {

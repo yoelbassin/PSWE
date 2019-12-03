@@ -8,10 +8,10 @@ public class Vector {
 
 	final public static Point3D Zero = new Point3D(0, 0, 0);
 
-	/***********
-	 * c'ctor ************
-	 * 
+	// ***************** Constructors ********************** //
+	/*
 	 * @exception do not allow defining zero point.
+	 * 
 	 * @throws newIllegalException()
 	 */
 
@@ -31,11 +31,12 @@ public class Vector {
 		this.head = HeadPoint;
 	}
 
-	/********* Getters************* */
+	// ***************** Getters/Setters ********************** //
 	public Point3D getHead() {
 		return head;
 	}
 
+	// ***************** Administration ******************** //
 	@Override
 	public boolean equals(Object other) {
 		if (this.getClass() == other.getClass() && head.equals(((Vector) other).getHead())) {
@@ -49,6 +50,7 @@ public class Vector {
 		return head.toString();
 	}
 
+	// ***************** Operations ******************** //
 	/**
 	 * add function : Vector.add(Vector) sum of two vectors equals to the equivalent
 	 * vector.
@@ -81,6 +83,7 @@ public class Vector {
 	 * dot product multiplication (a,b,c) dotProduct (h,y,k) = a*h+b*y+c*k
 	 * 
 	 * @param other , type Vector
+	 * @throws an exception will be thrown , if Vectors are orthogonal.
 	 * @return outcome of the formula below.
 	 */
 	public double dotProduct(Vector other) {
@@ -97,7 +100,6 @@ public class Vector {
 	 * 
 	 * @param other , type Vector .
 	 * @return orthogonal Vector.
-	 * @throws an exception will be thrown , if Vectors are orthogonal.
 	 */
 	public Vector crossProduct(Vector other) {
 
