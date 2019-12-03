@@ -12,10 +12,12 @@ public class Polygon implements Geometry {
 	Plane _plane;
 
 	/**
-	 * Constructs a polygon from set of points - polygon's vertices.
-	 * NB: the points must be in the same plane
+	 * Constructs a polygon from set of points - polygon's vertices. NB: the points
+	 * must be in the same plane
+	 * 
 	 * @param points vertices
-	 * @throws IllegalArgumentException if less than 3 points or points are not in the same plane
+	 * @throws IllegalArgumentException if less than 3 points or points are not in
+	 *                                  the same plane
 	 */
 	public Polygon(Point3D... points) {
 		if (points.length < 3)
@@ -30,7 +32,7 @@ public class Polygon implements Geometry {
 		for (int i = 3; i < points.length; ++i)
 			if (!isZero(p1.subtract(points[i]).dotProduct(n)))
 				throw new IllegalArgumentException("Polygon's vertices must resize in the same plane");
-		
+
 		_points = Arrays.asList(points);
 	}
 

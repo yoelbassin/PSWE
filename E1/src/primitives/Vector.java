@@ -179,6 +179,4 @@ public class Vector {
 		head = new Point3D(x / l, y / l, z / l );
 		return this;
 	}
-
-	
 }

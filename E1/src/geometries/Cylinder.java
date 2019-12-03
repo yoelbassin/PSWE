@@ -21,7 +21,7 @@ public class Cylinder extends Tube {
 	public Vector getNormal(Point3D p) {
 		Vector v = _axisRay.getDir();
 		Point3D p0 = _axisRay.getBasePoint();
-		if(p.equals(p0))
+		if (p.equals(p0))
 			return v;
 		Vector u = p.subtract(p0); // vector from p0 to p
 		double t = v.dotProduct(u); // size of projection of vector u on the ray
