@@ -3,15 +3,20 @@ package primitives;
 import java.lang.Math;
 
 public class Point3D {
+	static public final Point3D ZERO = new Point3D(0,0,0);
+	
 	private Coordinate x;
 	private Coordinate y;
 	private Coordinate z;
 
-	/***********
-	 * C'ctor********* Convenient double c'ctor.
+	// ***************** Constructors ********************** //
+	/*
+	 * Convenient double c'ctor.
 	 * 
 	 * @param x
+	 * 
 	 * @param y
+	 * 
 	 * @param z
 	 */
 	public Point3D(double x, double y, double z) {
@@ -20,25 +25,24 @@ public class Point3D {
 		this.z = new Coordinate(z);
 	}
 
-	/************
-	 * C'ctor **************** build a point3D from three Coordinates.
+	/*
+	 * build a point3D from three Coordinates.
 	 * 
 	 * @param x
+	 * 
 	 * @param y
+	 * 
 	 * @param z
 	 */
+
 	public Point3D(Coordinate x, Coordinate y, Coordinate z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
-	@Override
-	public String toString() {
-		return "(" + x + "," + y + "," + z + ")";
-	}
+	// ***************** Getters ********************** //
 
-	/********* Getters************* */
 	public Coordinate getX() {
 		return x;
 	}
@@ -50,6 +54,8 @@ public class Point3D {
 	public Coordinate getZ() {
 		return z;
 	}
+
+	// ***************** Administration ******************** //
 
 	/**
 	 * equal function
@@ -63,6 +69,13 @@ public class Point3D {
 		return false;
 
 	}
+
+	@Override
+	public String toString() {
+		return "(" + x + "," + y + "," + z + ")";
+	}
+
+	// ***************** Operations ******************** //
 
 	/**
 	 * Subtract function Vector a ; a.subtract(other) result a-other (Point3D)
