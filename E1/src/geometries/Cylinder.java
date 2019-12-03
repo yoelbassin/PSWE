@@ -30,7 +30,7 @@ public class Cylinder extends Tube {
 			System.out.println(t);
 			return v;
 		}
-		return p.subtract(p0.add(v.scale(t))).normalize();1
+		return p.subtract(p0.add(v.scale(t))).normalize();
 	}
 
 }
