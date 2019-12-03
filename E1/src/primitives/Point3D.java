@@ -3,8 +3,8 @@ package primitives;
 import java.lang.Math;
 
 public class Point3D {
-	static public final Point3D ZERO = new Point3D(0,0,0);
-	
+	static public final Point3D ZERO = new Point3D(0, 0, 0);
+
 	private Coordinate x;
 	private Coordinate y;
 	private Coordinate z;
@@ -61,13 +61,15 @@ public class Point3D {
 	 * equal function
 	 */
 	@Override
-	public boolean equals(Object other) {
-		if (x.equals(((Point3D) other).getX()) && y.equals(((Point3D) other).getY())
-				&& z.equals(((Point3D) other).getZ())) {
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		}
-		return false;
-
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Point3D))
+			return false;
+		Point3D other = (Point3D) obj;
+		return x.equals(other.x) && y.equals(other.y) && z.equals(other.z);
 	}
 
 	@Override
@@ -86,8 +88,13 @@ public class Point3D {
 	public Vector subtract(Point3D other) {
 		Point3D temp;
 		Vector vec;
-		temp = new Point3D(this.getX().subtract(other.getX()).get(), this.getY().subtract(other.getY()).get(),
-				this.getZ().subtract(other.getZ()).get());
+		double x1 = getX().get();
+		double y1 = getY().get();
+		double z1 = getZ().get();
+		double x2 = other.getX().get();
+		double y2 = other.getY().get();
+		double z2 = other.getZ().get();
+		temp = new Point3D(x1 - x2, y1 - y2, z1 - z2);
 		vec = new Vector(temp);
 		return vec;
 	}
@@ -100,8 +107,13 @@ public class Point3D {
 	 */
 	public Point3D add(Vector other) {
 		Point3D temp;
-		temp = new Point3D(this.getX().add(other.getHead().getX()).get(), this.getY().add(other.getHead().getY()).get(),
-				this.getZ().add(other.getHead().getZ()).get());
+		double x1 = getX().get();
+		double y1 = getY().get();
+		double z1 = getZ().get();
+		double x2 = other.head.getX().get();
+		double y2 = other.head.getY().get();
+		double z2 = other.head.getZ().get();
+		temp = new Point3D(x1 + x2, y1 + y1, z1 + z2);
 		return temp;
 	}
 
@@ -114,10 +126,16 @@ public class Point3D {
 	public double distance2(Point3D other) {
 		if (this.equals(other))
 			return 0;
-		double a = this.getX().subtract(other.getX()).get();
-		double b = this.getY().subtract(other.getY()).get();
-		double c = this.getZ().subtract(other.getZ()).get();
-		double temp = (a * a) + (b * b) + (c * c);
+		double x1 = getX().get();
+		double y1 = getY().get();
+		double z1 = getZ().get();
+		double x2 = other.getX().get();
+		double y2 = other.getY().get();
+		double z2 = other.getZ().get();
+		double a = x1 - x2;
+		double b = y1 - y2;
+		double c = z1 - z2;
+		double temp = a * a + b * b + c * c;
 		return temp;
 	}
 

@@ -10,7 +10,7 @@ import primitives.*;
 public class CylinderTest {
 	public static Point3D basePoint = new Point3D(0, 0, 0);
 	public static Vector vec = new Vector(0, 1, 0);
-	public static Ray asix = new Ray(vec, basePoint);
+	public static Ray asix = new Ray(basePoint, vec);
 
 	/**
 	 * Creating Cylinder with radius smaller than 0 (or equal)

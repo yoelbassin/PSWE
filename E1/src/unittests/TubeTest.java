@@ -8,7 +8,7 @@ import org.junit.Test;
 public class TubeTest {
 	public static Point3D basePoint = new Point3D(0, 0, 0);
 	public static Vector vec = new Vector(0, 1, 0);
-	public static Ray asix = new Ray(vec, basePoint);
+	public static Ray asix = new Ray(basePoint, vec);
 
 	/**
 	 * @exception Creates tube with radius smaller (or equal) than 0

@@ -20,18 +20,16 @@ public class Vector {
 	 * @throws newIllegalException when head is (0,0,0)
 	 */
 	public Vector(Point3D head) {
-		if (!head.equals(Point3D.ZERO))
-			this.head = head;
-		else {
+		if (head.equals(Point3D.ZERO))
 			throw new IllegalArgumentException("Zero Vector");
-		}
+		this.head = head;
 	}
 
 	public Vector(double x, double y, double z) {
-		Point3D HeadPoint = new Point3D(x, y, z);
-		if (!HeadPoint.equals(Point3D.ZERO))
-			HeadPoint = new Point3D(x, y, z);
-		this.head = HeadPoint;
+		Point3D headPoint = new Point3D(x, y, z);
+		if (!headPoint.equals(Point3D.ZERO))
+			headPoint = new Point3D(x, y, z);
+		this.head = headPoint;
 	}
 
 	// ***************** Getters/Setters ********************** //
@@ -102,9 +100,13 @@ public class Vector {
 	 */
 	public double dotProduct(Vector other) {
 		double temp;
-		temp = (this.head.getX().multiply(other.getHead().getX()).get()
-				+ this.head.getY().multiply(other.getHead().getY()).get()
-				+ this.head.getZ().multiply(other.getHead().getZ()).get());
+		double x1 = head.getX().get();
+		double y1 = head.getY().get();
+		double z1 = head.getZ().get();
+		double x2 = other.head.getX().get();
+		double y2 = other.head.getY().get();
+		double z2 = other.head.getZ().get();
+		temp = (x1 * x2 + y1 * y2 + z1 * z2);
 		return temp;
 	}
 
@@ -176,7 +178,7 @@ public class Vector {
 		double y = head.getY().get();
 		double z = head.getZ().get();
 		double l = length();
-		head = new Point3D(x / l, y / l, z / l );
+		head = new Point3D(x / l, y / l, z / l);
 		return this;
 	}
 }

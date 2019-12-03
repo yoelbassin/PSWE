@@ -11,7 +11,7 @@ public class Ray {
 	 * 
 	 * @param p , a point on the Ray
 	 */
-	public Ray(Vector vec, Point3D p) {
+	public Ray(Point3D p, Vector vec) {
 
 		this.dir = vec.normalized();
 		this.p = p;
