@@ -42,14 +42,12 @@ public class CylinderTest {
 		assertEquals(cylinder.getNormal(p), actual);
 	}
 
-	/**
-	 * normal on the perimeter of the base of the normal
-	 */
-	@Test(expected = ArithmeticException.class)
-	public void testCylinderBaseRadiusNormal() {
+	@Test
+	public void testCylinderTopBaseNormal() {
 		Cylinder cylinder = new Cylinder(1, 5, asix);
-		Point3D p = new Point3D(1, 0, 0);
-		cylinder.getNormal(p);
+		Point3D p = new Point3D(0, 5, 0);
+		Vector actual = new Vector(0, 1, 0);
+		assertEquals(cylinder.getNormal(p), actual);
 	}
 
 }

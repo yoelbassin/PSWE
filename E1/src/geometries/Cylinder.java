@@ -1,5 +1,7 @@
 package geometries;
 
+import static primitives.Util.isZero;
+
 import primitives.*;
 
 public class Cylinder extends Tube {
@@ -17,14 +19,18 @@ public class Cylinder extends Tube {
 
 	@Override
 	public Vector getNormal(Point3D p) {
-		Point3D basePoint = super.get_axisRay().getBasePoint();
-		Point3D topPoint = basePoint.add(super.get_axisRay().getVector().scale(_height));
-		if (p.distance(topPoint) == super.getRadius() || p.distance(basePoint) == super.getRadius())
-			throw new ArithmeticException("no normal in point");
-		if (p.distance(basePoint) < super.getRadius() || p.distance(topPoint) < super.getRadius()) {
-			return super.get_axisRay().getVector();
+		Vector v = _axisRay.getDir();
+		Point3D p0 = _axisRay.getBasePoint();
+		if(p.equals(p0))
+			return v;
+		Vector u = p.subtract(p0); // vector from p0 to p
+		double t = v.dotProduct(u); // size of projection of vector u on the ray
+		// point on the ray and plane crossing P and orthogonal to the ray
+		if (isZero(t) || isZero(t - this._height)) {
+			System.out.println(t);
+			return v;
 		}
-		return super.getNormal(p);
+		return p.subtract(p0.add(v.scale(t))).normalize();
 	}
 
 }

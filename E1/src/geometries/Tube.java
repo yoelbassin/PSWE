@@ -1,17 +1,18 @@
 package geometries;
 
 import primitives.*;
+import static primitives.Util.*;
 
 public class Tube extends RadialGeometry {
 
 	Ray _axisRay;
 
-	public Tube(Ray axis, double _radius) {
-		super(_radius);
+	public Tube(Ray axis, double radius) {
+		super(radius);
 		_axisRay = axis;
 	}
 
-	public Ray get_axisRay() {
+	public Ray getAxisRay() {
 		return _axisRay;
 	}
 
@@ -25,12 +26,18 @@ public class Tube extends RadialGeometry {
 	 */
 	@Override
 	public Vector getNormal(Point3D p) {
-		Point3D basePoint = _axisRay.getBasePoint();
-		double a = basePoint.distance2(p);
-		double centerLength = Math.sqrt(a - _radius * _radius);
-		Vector newVec = _axisRay.getVector().scale(centerLength);
-		Point3D center = basePoint.add(newVec);
-		return p.subtract(center).normalize();
+		Point3D p0 = _axisRay.getBasePoint();
+		Vector v = _axisRay.getDir();
+		Vector u = p.subtract(p0); // vector from p0 to p
+		double t = v.dotProduct(u); // size of projection of vector u on the ray
+		// point on the ray and plane crossing P and orthogonal to the ray
+		Point3D o;
+		if (isZero(t))
+			o = p0;
+		else
+			o = p0.add(v.scale(t));
+
+		return p.subtract(o).normalize();
 	}
 
 }

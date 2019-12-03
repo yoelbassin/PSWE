@@ -2,22 +2,25 @@ package primitives;
 
 import java.lang.Math;
 
+/**
+ * Class representing Cartesian 3D space vector
+ * 
+ * @author bassi
+ *
+ */
 public class Vector {
 
 	Point3D head;
 
-	final public static Point3D Zero = new Point3D(0, 0, 0);
-
 	// ***************** Constructors ********************** //
-	/*
-	 * @exception do not allow defining zero point.
+	/**
+	 * Constructs a vector by head point
 	 * 
-	 * @throws newIllegalException()
+	 * @param head point of the vector
+	 * @throws newIllegalException when head is (0,0,0)
 	 */
-
 	public Vector(Point3D head) {
-
-		if (!head.equals(Zero))
+		if (!head.equals(Point3D.ZERO))
 			this.head = head;
 		else {
 			throw new IllegalArgumentException("Zero Vector");
@@ -26,23 +29,34 @@ public class Vector {
 
 	public Vector(double x, double y, double z) {
 		Point3D HeadPoint = new Point3D(x, y, z);
-		if (!HeadPoint.equals(Zero))
+		if (!HeadPoint.equals(Point3D.ZERO))
 			HeadPoint = new Point3D(x, y, z);
 		this.head = HeadPoint;
 	}
 
 	// ***************** Getters/Setters ********************** //
+	/**
+	 * Getter of vector's head
+	 * 
+	 * @return point of the head
+	 */
 	public Point3D getHead() {
 		return head;
 	}
 
 	// ***************** Administration ******************** //
 	@Override
-	public boolean equals(Object other) {
-		if (this.getClass() == other.getClass() && head.equals(((Vector) other).getHead())) {
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		}
-		return false;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Vector))
+			return false;
+
+		Vector other = (Vector) obj;
+
+		return head.equals(other.head);
 	}
 
 	@Override
@@ -102,25 +116,14 @@ public class Vector {
 	 * @return orthogonal Vector.
 	 */
 	public Vector crossProduct(Vector other) {
+		double x1 = head.getX().get();
+		double y1 = head.getY().get();
+		double z1 = head.getZ().get();
+		double x2 = other.head.getX().get();
+		double y2 = other.head.getY().get();
+		double z2 = other.head.getZ().get();
 
-		Point3D temp;
-		Vector tempVec;
-		double newX;
-		double newY;
-		double newZ;
-		Coordinate thisX = new Coordinate(this.getHead().getX());
-		Coordinate thisY = new Coordinate(this.getHead().getY());
-		Coordinate thisZ = new Coordinate(this.getHead().getZ());
-		Coordinate otherX = new Coordinate(other.getHead().getX());
-		Coordinate otherY = new Coordinate(other.getHead().getY());
-		Coordinate otherZ = new Coordinate(other.getHead().getZ());
-		newX = ((thisY.multiply(otherZ)).subtract(thisZ.multiply(otherY))).get();
-		newY = ((thisZ.multiply(otherX)).subtract(thisX.multiply(otherZ))).get();
-		newZ = ((thisX.multiply(otherY)).subtract(thisY.multiply(otherX))).get();
-		temp = new Point3D(newX, newY, newZ);
-		tempVec = new Vector(temp);
-		return tempVec;
-
+		return new Vector(y1 * z2 - y2 * z1, z1 * x2 - z2 * x1, x1 * y2 - x2 * y1);
 	}
 
 	/**
@@ -129,7 +132,11 @@ public class Vector {
 	 * @return |vec| squared.
 	 */
 	public double length2() {
-		return head.distance2(Zero);
+		double x = head.getX().get();
+		double y = head.getY().get();
+		double z = head.getZ().get();
+
+		return x * x + y * y + z * z;
 	}
 
 	/**
@@ -148,25 +155,30 @@ public class Vector {
 	 * @return a Vector multiply by a scale number.
 	 */
 	public Vector scale(double num) {
-		Point3D temp;
-		Vector Otherhead;
-		temp = new Point3D(this.head.getX().scale(num).get(), this.head.getY().scale(num).get(),
-				this.head.getZ().scale(num).get());
-		Otherhead = new Vector(temp);
-		return Otherhead;
+		double x = head.getX().get();
+		double y = head.getY().get();
+		double z = head.getZ().get();
+
+		return new Vector(num * x, num * y, num * z);
 	}
 
 	/**
 	 * normalize Vector Receiving a normal direction Vector without change head.
 	 * 
-	 * @return normal Vector.
+	 * @return new vector of size 1 in the same direction
 	 */
-	public Vector normalize() {
-		Vector otherHead;
-		double temp;
-		temp = 1 / this.length();
-		otherHead = this.scale(temp);
-		return otherHead;
+	public Vector normalized() {
+		return scale(1 / length());
 	}
 
+	public Vector normalize() {
+		double x = head.getX().get();
+		double y = head.getY().get();
+		double z = head.getZ().get();
+		double l = length();
+		head = new Point3D(x / l, y / l, z / l );
+		return this;
+	}
+
+	
 }

@@ -13,7 +13,7 @@ public class VectorTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testVectorZero() {
-		Vector ZeroVector = new Vector(Vector.Zero);
+		Vector ZeroVector = new Vector(Point3D.ZERO);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class VectorTest {
 	public void testNormal() {
 		Vector vec1 = new Vector(0, 9, 0);
 		Vector vec2 = new Vector(0, 1, 0);
-		assertEquals(vec2, vec1.normalize());
+		assertEquals(vec2, vec1.normalized());
 	}
 
 	/**

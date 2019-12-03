@@ -3,6 +3,8 @@ package primitives;
 import java.lang.Math;
 
 public class Point3D {
+	static public final Point3D ZERO = new Point3D(0,0,0);
+	
 	private Coordinate x;
 	private Coordinate y;
 	private Coordinate z;
