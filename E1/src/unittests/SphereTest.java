@@ -8,9 +8,6 @@ import org.junit.Test;
 
 public class SphereTest {
 
-	/**
-	 * test of the normal of the sphare
-	 */
 	@Test
 	public void testSphere() {
 		Point3D center = new Point3D(0, 0, 0);

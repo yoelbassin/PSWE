@@ -27,7 +27,6 @@ public class Cylinder extends Tube {
 		double t = v.dotProduct(u); // size of projection of vector u on the ray
 		// point on the ray and plane crossing P and orthogonal to the ray
 		if (isZero(t) || isZero(t - this._height)) {
-			System.out.println(t);
 			return v;
 		}
 		return p.subtract(p0.add(v.scale(t))).normalize();

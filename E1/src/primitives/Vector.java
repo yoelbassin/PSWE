@@ -27,9 +27,22 @@ public class Vector {
 
 	public Vector(double x, double y, double z) {
 		Point3D headPoint = new Point3D(x, y, z);
-		if (!headPoint.equals(Point3D.ZERO))
-			headPoint = new Point3D(x, y, z);
+		if (headPoint.equals(Point3D.ZERO))
+			throw new IllegalArgumentException("Zero Vector");
 		this.head = headPoint;
+	}
+
+	public Vector(Coordinate x, Coordinate y, Coordinate z) {
+		Point3D headPoint = new Point3D(x, y, z);
+		if (headPoint.equals(Point3D.ZERO))
+			throw new IllegalArgumentException("Zero Vector");
+		this.head = headPoint;
+	}
+
+	public Vector(Vector other) {
+		if (other.head.equals(Point3D.ZERO))
+			throw new IllegalArgumentException("Zero Vector");
+		this.head = other.head;
 	}
 
 	// ***************** Getters/Setters ********************** //

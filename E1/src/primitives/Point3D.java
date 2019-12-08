@@ -113,7 +113,7 @@ public class Point3D {
 		double x2 = other.head.getX().get();
 		double y2 = other.head.getY().get();
 		double z2 = other.head.getZ().get();
-		temp = new Point3D(x1 + x2, y1 + y1, z1 + z2);
+		temp = new Point3D(x1 + x2, y1 + y2, z1 + z2);
 		return temp;
 	}
 
