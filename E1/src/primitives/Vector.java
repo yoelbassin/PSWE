@@ -6,7 +6,7 @@ import java.lang.Math;
  * Class representing Cartesian 3D space vector
  * 
  * @author bassi
- *
+ * @author asaf0
  */
 public class Vector {
 
@@ -14,7 +14,7 @@ public class Vector {
 
 	// ***************** Constructors ********************** //
 	/**
-	 * Constructs a vector by head point
+	 * Constructs a vector with head point
 	 * 
 	 * @param head point of the vector
 	 * @throws newIllegalException when head is (0,0,0)
@@ -25,6 +25,14 @@ public class Vector {
 		this.head = head;
 	}
 
+	/**
+	 * Constructs a vector with three decimal numbers.
+	 * 
+	 * @param x coordinate of head point
+	 * @param y coordinate of head point
+	 * @param z coordinate of head point
+	 * @throws newIllegalException when head is (0,0,0)
+	 */
 	public Vector(double x, double y, double z) {
 		Point3D headPoint = new Point3D(x, y, z);
 		if (headPoint.equals(Point3D.ZERO))
@@ -32,6 +40,14 @@ public class Vector {
 		this.head = headPoint;
 	}
 
+	/**
+	 * Constructs a vector with three coordinates.
+	 * 
+	 * @param x coordinate of head point
+	 * @param y coordinate of head point
+	 * @param z coordinate of head point
+	 * @throws newIllegalException when head is (0,0,0)
+	 */
 	public Vector(Coordinate x, Coordinate y, Coordinate z) {
 		Point3D headPoint = new Point3D(x, y, z);
 		if (headPoint.equals(Point3D.ZERO))
@@ -39,6 +55,12 @@ public class Vector {
 		this.head = headPoint;
 	}
 
+	/**
+	 * Construct head point of vector class with a vector
+	 * 
+	 * @param other vector
+	 * @throws newIllegalException when head is (0,0,0)
+	 */
 	public Vector(Vector other) {
 		if (other.head.equals(Point3D.ZERO))
 			throw new IllegalArgumentException("Zero Vector");
@@ -77,10 +99,9 @@ public class Vector {
 
 	// ***************** Operations ******************** //
 	/**
-	 * add function : Vector.add(Vector) sum of two vectors equals to the equivalent
-	 * vector.
+	 * Vector addition operation.
 	 * 
-	 * @param other
+	 * @param other vector
 	 * @return equivalent vector
 	 */
 	public Vector add(Vector other) {
@@ -92,10 +113,9 @@ public class Vector {
 	}
 
 	/**
-	 * subtract function : Vector.sub(Vector) Subtract define as the sum of vector +
-	 * -(other).
+	 * Vector subtraction operation.
 	 * 
-	 * @param other , type Vector
+	 * @param other Vector
 	 * @return equivalent vector.
 	 */
 	public Vector subtract(Vector other) {
@@ -105,11 +125,11 @@ public class Vector {
 	}
 
 	/**
-	 * dot product multiplication (a,b,c) dotProduct (h,y,k) = a*h+b*y+c*k
+	 * The dot-product function takes two 3D space vectors and return a number as
+	 * the formula (a,b,c) * (h,y,k) = a*h+b*y+c*k
 	 * 
-	 * @param other , type Vector
-	 * @throws an exception will be thrown , if Vectors are orthogonal.
-	 * @return outcome of the formula below.
+	 * @param other Vector
+	 * @return Outcome of the formula below.
 	 */
 	public double dotProduct(Vector other) {
 		double temp;
@@ -124,11 +144,11 @@ public class Vector {
 	}
 
 	/**
-	 * cross product multiplication define as the result of (a,b,c) crossProduct
-	 * (h,y,f) = (b*f-c*y,c*h-a*f,a*y-b*h).
+	 * cross product multiplication define as the result of (a,b,c) cross(h,y,f) =
+	 * (b*f-c*y,c*h-a*f,a*y-b*h).
 	 * 
-	 * @param other , type Vector .
-	 * @return orthogonal Vector.
+	 * @param other vector .
+	 * @return vector orthogonal to each one of the two vectors.
 	 */
 	public Vector crossProduct(Vector other) {
 		double x1 = head.getX().get();
@@ -142,9 +162,9 @@ public class Vector {
 	}
 
 	/**
-	 * squared length of the Vector
+	 * Calculates the length of vector squared
 	 * 
-	 * @return |vec| squared.
+	 * @return squared length of vector
 	 */
 	public double length2() {
 		double x = head.getX().get();
@@ -155,7 +175,7 @@ public class Vector {
 	}
 
 	/**
-	 * length of the Vector define as size of Vector |v|= sqrt(x*x + y*y + z*z)
+	 * Length of vector
 	 * 
 	 * @return size of Vector
 	 */
@@ -164,10 +184,10 @@ public class Vector {
 	}
 
 	/**
-	 * change size of the Vector (Scalar) * (a Vector)
+	 * Scale vector by num.
 	 * 
-	 * @param num , type double
-	 * @return a Vector multiply by a scale number.
+	 * @param num scale size
+	 * @return scaled vector by num
 	 */
 	public Vector scale(double num) {
 		double x = head.getX().get();
@@ -178,14 +198,19 @@ public class Vector {
 	}
 
 	/**
-	 * normalize Vector Receiving a normal direction Vector without change head.
+	 * Scale vector by 1/length
 	 * 
-	 * @return new vector of size 1 in the same direction
+	 * @return normalized vector
 	 */
 	public Vector normalized() {
 		return scale(1 / length());
 	}
 
+	/**
+	 * Scale new vector by 1/length
+	 * 
+	 * @return new normalized vector
+	 */
 	public Vector normalize() {
 		double x = head.getX().get();
 		double y = head.getY().get();
