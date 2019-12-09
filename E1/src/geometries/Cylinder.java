@@ -7,6 +7,15 @@ import primitives.*;
 public class Cylinder extends Tube {
 	double _height;
 
+	// ***************** Constructors ********************** //
+	/**
+	 * Constructs a cylinder with radius, height and axis ray
+	 * 
+	 * @param double _radius, radius of the cylinder
+	 * @param double _height, height of the cylinder
+	 * @param Ray    _axis, axis of the cylinder
+	 * @throws new IllegalException when radius is smaller than zero
+	 */
 	public Cylinder(double _radius, double _height, Ray _axis) {
 		super(_axis, _radius);
 		if (_height > 0)
@@ -14,9 +23,15 @@ public class Cylinder extends Tube {
 		else {
 			throw new IllegalArgumentException("Radius is smaller than zero");
 		}
-		// TODO Auto-generated constructor stub
 	}
 
+	// ***************** Operations ******************** //
+	/**
+	 * Gets the direction of the normal vector of the cylinder at a certain point
+	 * 
+	 * @param p, the point on the cylinder
+	 * @return the direction of the normal vector
+	 */
 	@Override
 	public Vector getNormal(Point3D p) {
 		Vector v = _axisRay.getDir();
