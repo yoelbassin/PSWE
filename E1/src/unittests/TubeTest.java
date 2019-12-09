@@ -27,7 +27,7 @@ public class TubeTest {
 		Point3D p = new Point3D(1, 2, 0);
 		Vector actual = new Vector(1, 0, 0);
 		assertEquals("Normal function error", tube.getNormal(p), actual);// Test of normal on the tube
-		p = new Point3D(0, 0, 0);//a
+		p = new Point3D(0, 0, 0);
 		actual = new Vector(0, 1, 0);
 		assertEquals("Normal function error", tube.getNormal(p), actual);// Test of normal on the base of the tube
 	}
