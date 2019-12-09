@@ -2,151 +2,210 @@ package primitives;
 
 import java.lang.Math;
 
-public class Point3D {
-	static public final Point3D ZERO = new Point3D(0, 0, 0);
+/**
+ * Class representing Cartesian 3D space vector
+ * 
+ * @author bassi
+ *
+ */
+public class Vector {
 
-	private Coordinate x;
-	private Coordinate y;
-	private Coordinate z;
+	Point3D head;
 
 	// ***************** Constructors ********************** //
-	/*
-	 * Convenient double c'ctor.
+	/**
+	 * Constructs a vector with head point
 	 * 
-	 * @param x
-	 * 
-	 * @param y
-	 * 
-	 * @param z
+	 * @param head point of the vector
+	 * @throws newIllegalException when head is (0,0,0)
 	 */
-	public Point3D(double x, double y, double z) {
-		this.x = new Coordinate(x);
-		this.y = new Coordinate(y);
-		this.z = new Coordinate(z);
+	public Vector(Point3D head) {
+		if (head.equals(Point3D.ZERO))
+			throw new IllegalArgumentException("Zero Vector");
+		this.head = head;
 	}
-
-	/*
-	 * build a point3D from three Coordinates.
-	 * 
-	 * @param x
-	 * 
-	 * @param y
-	 * 
-	 * @param z
+/**
+ * Constructs a vector with three decimal numbers.
+ * @param x coordinate of head point 
+ * @param y coordinate of head point
+ * @param z coordinate of head point
+ * @throws  newIllegalException when head is (0,0,0)
+ */
+	public Vector(double x, double y, double z) {
+		Point3D headPoint = new Point3D(x, y, z);
+		if (headPoint.equals(Point3D.ZERO))
+			throw new IllegalArgumentException("Zero Vector");
+		this.head = headPoint;
+	}
+	/**
+	 * Constructs a vector with three coordinates.
+	 * @param x coordinate of head point 
+	 * @param y coordinate of head point
+	 * @param z coordinate of head point
+	 * @throws  newIllegalException when head is (0,0,0)
 	 */
-
-	public Point3D(Coordinate x, Coordinate y, Coordinate z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public Vector(Coordinate x, Coordinate y, Coordinate z) {
+		Point3D headPoint = new Point3D(x, y, z);
+		if (headPoint.equals(Point3D.ZERO))
+			throw new IllegalArgumentException("Zero Vector");
+		this.head = headPoint;
+	}
+/**
+ * Construct head point of vector class with a vector
+ * @param other vector
+ * @throws  newIllegalException when head is (0,0,0)
+ */
+	public Vector(Vector other) {
+		if (other.head.equals(Point3D.ZERO))
+			throw new IllegalArgumentException("Zero Vector");
+		this.head = other.head;
 	}
 
-	// ***************** Getters ********************** //
-
-	public Coordinate getX() {
-		return x;
-	}
-
-	public Coordinate getY() {
-		return y;
-	}
-
-	public Coordinate getZ() {
-		return z;
+	// ***************** Getters/Setters ********************** //
+	/**
+	 * Getter of vector's head
+	 * 
+	 * @return point of the head
+	 */
+	public Point3D getHead() {
+		return head;
 	}
 
 	// ***************** Administration ******************** //
-
-	/**
-	 * equal function
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Point3D))
+		if (!(obj instanceof Vector))
 			return false;
-		Point3D other = (Point3D) obj;
-		return x.equals(other.x) && y.equals(other.y) && z.equals(other.z);
+
+		Vector other = (Vector) obj;
+
+		return head.equals(other.head);
 	}
 
 	@Override
 	public String toString() {
-		return "(" + x + "," + y + "," + z + ")";
+		return head.toString();
 	}
 
 	// ***************** Operations ******************** //
-
 	/**
-	 * Subtract function Vector a ; a.subtract(other) result a-other (Point3D)
+	 * Vector addition operation.
 	 * 
-	 * @param other , type Vector
-	 * @return the equivalent Vector
+	 * @param other vector
+	 * @return equivalent vector
 	 */
-	public Vector subtract(Point3D other) {
+	public Vector add(Vector other) {
 		Point3D temp;
-		Vector vec;
-		double x1 = getX().get();
-		double y1 = getY().get();
-		double z1 = getZ().get();
-		double x2 = other.getX().get();
-		double y2 = other.getY().get();
-		double z2 = other.getZ().get();
-		temp = new Point3D(x1 - x2, y1 - y2, z1 - z2);
-		vec = new Vector(temp);
-		return vec;
+		Vector newVec;
+		temp = this.head.add(other);
+		newVec = new Vector(temp);
+		return newVec;
 	}
 
 	/**
-	 * add Vector function .
+	 * Vector subtraction operation.
+	 * @param other Vector
+	 * @return equivalent vector.
+	 */
+	public Vector subtract(Vector other) {
+		Vector newVec;
+		newVec = this.head.subtract(other.getHead());
+		return newVec;
+	}
+
+	/**
+	 * The dot-product function takes two 3D space vectors and return 
+	 * dot product multiplication (a,b,c) dotProduct (h,y,k) = a*h+b*y+c*k
 	 * 
 	 * @param other , type Vector
-	 * @return the equivalent point.
+	 * @throws an exception will be thrown , if Vectors are orthogonal.
+	 * @return outcome of the formula below.
 	 */
-	public Point3D add(Vector other) {
-		Point3D temp;
-		double x1 = getX().get();
-		double y1 = getY().get();
-		double z1 = getZ().get();
+	public double dotProduct(Vector other) {
+		double temp;
+		double x1 = head.getX().get();
+		double y1 = head.getY().get();
+		double z1 = head.getZ().get();
 		double x2 = other.head.getX().get();
 		double y2 = other.head.getY().get();
 		double z2 = other.head.getZ().get();
-		temp = new Point3D(x1 + x2, y1 + y2, z1 + z2);
+		temp = (x1 * x2 + y1 * y2 + z1 * z2);
 		return temp;
 	}
 
 	/**
-	 * Squared distance
+	 * cross product multiplication define as the result of (a,b,c) crossProduct
+	 * (h,y,f) = (b*f-c*y,c*h-a*f,a*y-b*h).
 	 * 
-	 * @param other , type Point3D
-	 * @return the square distance between points.
+	 * @param other , type Vector .
+	 * @return orthogonal Vector.
 	 */
-	public double distance2(Point3D other) {
-		if (this.equals(other))
-			return 0;
-		double x1 = getX().get();
-		double y1 = getY().get();
-		double z1 = getZ().get();
-		double x2 = other.getX().get();
-		double y2 = other.getY().get();
-		double z2 = other.getZ().get();
-		double a = x1 - x2;
-		double b = y1 - y2;
-		double c = z1 - z2;
-		double temp = a * a + b * b + c * c;
-		return temp;
+	public Vector crossProduct(Vector other) {
+		double x1 = head.getX().get();
+		double y1 = head.getY().get();
+		double z1 = head.getZ().get();
+		double x2 = other.head.getX().get();
+		double y2 = other.head.getY().get();
+		double z2 = other.head.getZ().get();
+
+		return new Vector(y1 * z2 - y2 * z1, z1 * x2 - z2 * x1, x1 * y2 - x2 * y1);
 	}
 
 	/**
-	 * actual distance between points.
+	 * squared length of the Vector
 	 * 
-	 * @param other , type Point3D
-	 * @return the
+	 * @return |vec| squared.
 	 */
-	public double distance(Point3D other) {
-		return Math.sqrt(distance2(other));
+	public double length2() {
+		double x = head.getX().get();
+		double y = head.getY().get();
+		double z = head.getZ().get();
+
+		return x * x + y * y + z * z;
 	}
 
+	/**
+	 * length of the Vector define as size of Vector |v|= sqrt(x*x + y*y + z*z)
+	 * 
+	 * @return size of Vector
+	 */
+	public double length() {
+		return Math.sqrt(length2());
+	}
+
+	/**
+	 * change size of the Vector (Scalar) * (a Vector)
+	 * 
+	 * @param num , type double
+	 * @return a Vector multiply by a scale number.
+	 */
+	public Vector scale(double num) {
+		double x = head.getX().get();
+		double y = head.getY().get();
+		double z = head.getZ().get();
+
+		return new Vector(num * x, num * y, num * z);
+	}
+
+	/**
+	 * normalize Vector Receiving a normal direction Vector without change head.
+	 * 
+	 * @return new vector of size 1 in the same direction
+	 */
+	public Vector normalized() {
+		return scale(1 / length());
+	}
+
+	public Vector normalize() {
+		double x = head.getX().get();
+		double y = head.getY().get();
+		double z = head.getZ().get();
+		double l = length();
+		head = new Point3D(x / l, y / l, z / l);
+		return this;
+	}
 }
