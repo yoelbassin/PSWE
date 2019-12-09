@@ -11,6 +11,7 @@ public class Polygon implements Geometry {
 	List<Point3D> _points;
 	Plane _plane;
 
+	// ***************** Constructors ********************** //
 	/**
 	 * Constructs a polygon from set of points - polygon's vertices. NB: the points
 	 * must be in the same plane
@@ -36,6 +37,12 @@ public class Polygon implements Geometry {
 		_points = Arrays.asList(points);
 	}
 
+	// ***************** Operations ******************** //
+	/**
+	 * Gets the normal of the polygon at a certain point
+	 * 
+	 * @return the normal of the plane of the polygon
+	 */
 	public Vector getNormal(Point3D p) {
 		return _plane.getNormal(p);
 	}
