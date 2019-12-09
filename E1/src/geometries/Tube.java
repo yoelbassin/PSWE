@@ -7,22 +7,33 @@ public class Tube extends RadialGeometry {
 
 	Ray _axisRay;
 
+	// ***************** Constructors ********************** //
+	/**
+	 * constructs a tube from axis and radius
+	 * 
+	 * @param axis, the axis of the tube
+	 * @param radius, the radius of the tube
+	 */
 	public Tube(Ray axis, double radius) {
 		super(radius);
 		_axisRay = axis;
 	}
 
+	// ***************** Getters/Setters ********************** //
+	/**
+	 * Gets the axis of the tube
+	 * @return axis of the tube
+	 */
 	public Ray getAxisRay() {
 		return _axisRay;
 	}
 
-	/*
-	 * 1. getting the length from the point to the base point of the ray. 2. getting
-	 * the distance from the base point to the variable 'center' - the center of the
-	 * tube in the plane of our new normal 3. creating a vector with the length of
-	 * the distance we got 4. moving the vector to the base point of the ray and
-	 * getting the head (the 'center') 5. creating a normal from the 'center' to the
-	 * point
+	// ***************** Operations ******************** //
+	/**
+	 * Gets the normal of the tube at a certain point
+	 * 
+	 * @param p, the point of the normal
+	 * @return the normal of the tube
 	 */
 	@Override
 	public Vector getNormal(Point3D p) {
@@ -34,7 +45,7 @@ public class Tube extends RadialGeometry {
 		double t = v.dotProduct(u); // size of projection of vector u on the ray
 		// point on the ray and plane crossing P and orthogonal to the ray
 		Point3D o;
-		if (isZero(t))
+		if (isZero(t)) // if the point is on the base of the tube
 			o = p0;
 		else
 			o = p0.add(v.scale(t));
