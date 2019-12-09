@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class PlaneTest {
 	/**
-	 * plane with same point in constractor
+	 * plane with same point in constructor
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testPlaneZero() {
