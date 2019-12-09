@@ -14,7 +14,7 @@ public class SphereTest {
 		Sphere sphere = new Sphere(2, center);
 		Point3D p = new Point3D(0, 2, 0);
 		Vector actual = new Vector(0, 1, 0);
-		assertEquals(sphere.getNormal(p), actual);
+		assertEquals("Get normal function error", sphere.getNormal(p), actual);
 	}
 
 }

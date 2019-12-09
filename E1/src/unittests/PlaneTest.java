@@ -25,7 +25,7 @@ public class PlaneTest {
 		Point3D p = new Point3D(0, 0, 0);
 		Vector vec = new Vector(0, 1, 0);
 		Plane plane = new Plane(p, vec);
-		assertEquals(vec, plane.getNormal());
+		assertEquals("Get normal function error",vec, plane.getNormal());
 	}
 
 }

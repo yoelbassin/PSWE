@@ -27,6 +27,6 @@ public class PolygonTest {
 		Point3D p3 = new Point3D(4, 0, 0);
 		Polygon polygon = new Polygon(p1, p2, p3);
 		Vector normal = new Vector(0, 0, 1);
-		assertEquals(normal, polygon.getNormal(new Point3D(1,1,0)));
+		assertEquals("Get normal function error",normal, polygon.getNormal(new Point3D(1,1,0)));
 	}
 }
