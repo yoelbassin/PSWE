@@ -7,9 +7,11 @@ import primitives.*;
 import org.junit.Test;
 
 public class SphereTest {
-
+	/**
+	 * Sphere normal function test
+	 */
 	@Test
-	public void testSphere() {
+	public void testGetNormal() {
 		Point3D center = new Point3D(0, 0, 0);
 		Sphere sphere = new Sphere(2, center);
 		Point3D p = new Point3D(0, 2, 0);
