@@ -5,8 +5,6 @@ import java.lang.Math;
 /**
  * Class representing Cartesian 3D space vector
  * 
- * @author bassi
- * @author asaf0
  */
 public class Vector {
 
@@ -26,18 +24,17 @@ public class Vector {
 	}
 
 	/**
-	 * Constructs a vector with three decimal numbers.
+	 * Constructs a vector by values of three coordinates of vector's head
 	 * 
-	 * @param x coordinate of head point
-	 * @param y coordinate of head point
-	 * @param z coordinate of head point
+	 * @param x coordinate value
+	 * @param y coordinate value
+	 * @param z coordinate value
 	 * @throws newIllegalException when head is (0,0,0)
 	 */
 	public Vector(double x, double y, double z) {
-		Point3D headPoint = new Point3D(x, y, z);
-		if (headPoint.equals(Point3D.ZERO))
+		this.head = new Point3D(x, y, z);
+		if (this.head.equals(Point3D.ZERO))
 			throw new IllegalArgumentException("Zero Vector");
-		this.head = headPoint;
 	}
 
 	/**
@@ -62,8 +59,6 @@ public class Vector {
 	 * @throws newIllegalException when head is (0,0,0)
 	 */
 	public Vector(Vector other) {
-		if (other.head.equals(Point3D.ZERO))
-			throw new IllegalArgumentException("Zero Vector");
 		this.head = other.head;
 	}
 
@@ -94,7 +89,7 @@ public class Vector {
 
 	@Override
 	public String toString() {
-		return head.toString();
+		return "->" + head;
 	}
 
 	// ***************** Operations ******************** //
@@ -108,8 +103,7 @@ public class Vector {
 		Point3D temp;
 		Vector newVec;
 		temp = this.head.add(other);
-		newVec = new Vector(temp);
-		return newVec;
+		return new Vector(temp);
 	}
 
 	/**
@@ -139,8 +133,7 @@ public class Vector {
 		double x2 = other.head.getX().get();
 		double y2 = other.head.getY().get();
 		double z2 = other.head.getZ().get();
-		temp = (x1 * x2 + y1 * y2 + z1 * z2);
-		return temp;
+		return (x1 * x2 + y1 * y2 + z1 * z2);
 	}
 
 	/**
@@ -198,7 +191,7 @@ public class Vector {
 	}
 
 	/**
-	 * Scale vector by 1/length
+	 * Builds new vector of length 1 in the same direction
 	 * 
 	 * @return normalized vector
 	 */
@@ -207,9 +200,9 @@ public class Vector {
 	}
 
 	/**
-	 * Scale new vector by 1/length
+	 * Makes the vector to be of length 1 keeping the direction
 	 * 
-	 * @return new normalized vector
+	 * @return normalized vector itself
 	 */
 	public Vector normalize() {
 		double x = head.getX().get();
