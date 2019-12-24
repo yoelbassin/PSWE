@@ -59,15 +59,14 @@ public class Plane implements Geometry {
         List<Point3D> intersections;
         Point3D basePoint = ray.getBasePoint();
         Vector dir = ray.getDir();
-        if (this._normal.dotProduct(dir) == 0)
+        if (this._normal.dotProduct(dir) == 0) // if the ray is ray in parallel to the plane (or orthogonal to the normal) return null
             return null;
-        if (basePoint.equals(this._p))
+        if (basePoint.equals(this._p)) // if the base point of the ray is equal to the origin point of the plane, return the point
             return intersections = Arrays.asList(basePoint);
-        ;
         double t = this._normal.dotProduct(this._p.subtract(basePoint)) / this._normal.dotProduct(dir);
-        if (t < 0)
+        if (t < 0) // if the plane is behind the ray, return null
             return null;
-        if (t == 0)
+        if (t == 0) // if the base point of the ray is on the plane, return the point
             return intersections = Arrays.asList(basePoint);
         return intersections = Arrays.asList(basePoint.add(dir.scale(t)));
     }
