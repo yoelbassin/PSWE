@@ -3,6 +3,8 @@ package geometries;
 import primitives.*;
 import static primitives.Util.*;
 
+import java.util.List;
+
 public class Tube extends RadialGeometry {
 
 	Ray _axisRay;
@@ -11,7 +13,7 @@ public class Tube extends RadialGeometry {
 	/**
 	 * constructs a tube from axis and radius
 	 * 
-	 * @param axis, the axis of the tube
+	 * @param axis,   the axis of the tube
 	 * @param radius, the radius of the tube
 	 */
 	public Tube(Ray axis, double radius) {
@@ -22,6 +24,7 @@ public class Tube extends RadialGeometry {
 	// ***************** Getters/Setters ********************** //
 	/**
 	 * Gets the axis of the tube
+	 * 
 	 * @return axis of the tube
 	 */
 	public Ray getAxisRay() {
@@ -35,7 +38,6 @@ public class Tube extends RadialGeometry {
 	 * @param p, the point of the normal
 	 * @return the normal of the tube
 	 */
-	@Override
 	public Vector getNormal(Point3D p) {
 		Point3D p0 = _axisRay.getBasePoint();
 		Vector v = _axisRay.getDir();
@@ -53,4 +55,7 @@ public class Tube extends RadialGeometry {
 		return p.subtract(o).normalize();
 	}
 
+	public List<Point3D> findIntersections(Ray ray) {
+		return null;
+	}
 }
