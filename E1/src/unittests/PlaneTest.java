@@ -26,15 +26,17 @@ public class PlaneTest {
     static Point3D p = new Point3D(1, 1, 0);
     static Vector dir = new Vector(0, 0, 1);
 
+    /**
+     * test Method for {@link geomtries.Plane#findIntersections(geomtries.Plane)}
+     */
     @Test
     public void testFindIntersections() {
         Plane polygon = new Plane(p, dir);
         Ray ray = new Ray(new Point3D(0, 0, 1), new Vector(1, 1, -1));
-        Point3D intersection = new Point3D(1, 1, 0);
-        List<Point3D> intersections = Arrays.asList(intersection);
-        assertEquals("Find intersections function error", intersections, polygon.findIntersections(ray)); //EP
+        List<Point3D> intersections = Arrays.asList(new Point3D(1, 1, 0));
+        assertEquals("Find intersections function error", intersections, polygon.findIntersections(ray)); //EP ray intersects with the plane
         ray = new Ray(new Point3D(0, 0, 1), new Vector(1, 1, 1));
-        assertEquals("Find intersections function error", null, polygon.findIntersections(ray)); //EP
+        assertEquals("Find intersections function error", null, polygon.findIntersections(ray)); //EP ray does not intersect with the plane
         ray = new Ray(new Point3D(0, 0, 0), new Vector(1, 1, 0));
         assertEquals("Find intersections function error", null, polygon.findIntersections(ray)); //BVA ray is parallel and included in the plane
         ray = new Ray(new Point3D(0, 0, 1), new Vector(1, 1, 0));
