@@ -9,14 +9,11 @@ import primitives.Vector;
 
 /**
  * Class tests vector class operations.
- * 
- * @author bassi
- * @author asaf0
- *
  */
 public class VectorTest {
 	/**
-	 * Test succeed when IllegalArgumentException is thrown and fail when zero
+	 * Test succeed when IllegalArgumentException is thrown 
+	 * and fail when zero
 	 * vector is successfully created.
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -25,10 +22,7 @@ public class VectorTest {
 	}
 
 	/**
-	 * @test Vector plus its negative equals to zero vector and an
-	 *       IllegalArgumentException must be thrown
-	 *
-	 * @test succeeded when addition operation results are correct
+	 * test Method for {@link primitives.Vector#add(primitives.Vector)}.
 	 */
 	@Test
 	public void testAdd() {
@@ -44,10 +38,7 @@ public class VectorTest {
 	}
 
 	/**
-	 * @test succeeded when throw IllegalArgumentException when subtract the same
-	 *       vector
-	 * 
-	 * @test succeeded when subtraction operation result is correct
+	 * test Method for {@link primitives.Vector#subtract(primitives.Vector)}.
 	 */
 	@Test
 	public void testSubtract() {
@@ -63,20 +54,26 @@ public class VectorTest {
 	}
 
 	/**
-	 * @test succeeded when dot product operation result is correct.
-	 * 
-	 *       Reporting an error when vectors are orthogonal
+	 * test Method for {@link primitives.Vector#dotProduct(primitives.Vector)}.
 	 */
 	@Test
 	public void testDotProduct() {
-		Vector vec1 = new Vector(2, 1, -1);
-		Vector vec2 = new Vector(1, -2, 0);
+		Vector vec1 = new Vector(1, 0, 0);
+		Vector vec2 = new Vector(0, 1, 0);
 		double dot = vec1.dotProduct(vec2);
 		assertEquals("Dot product function error", 0, dot, 0);
+		vec1 = new Vector(1, 0, 0);
+		vec2 = new Vector(1, 1, 0);
+		dot = vec1.dotProduct(vec2);
+		assertEquals("Dot product function error", 1, dot, 0);
+		 vec1 = new Vector(1, 0, 0);
+		 vec2 = new Vector(5, 0, 0);
+		 dot = vec1.dotProduct(vec2);
+		assertEquals("Dot product function error", 5, dot, 0);
 	}
 
 	/**
-	 * @test succeeded when equals return true
+	 * test Method for {@link primitives.Vector#equal(primitives.Vector)}
 	 */
 	@Test
 	public void testEqual() {
@@ -86,7 +83,7 @@ public class VectorTest {
 	}
 
 	/**
-	 * @test succeeded when normalize operates correctly
+	 * test Method for {@link primitives.Vector#getNormal(primitives.Vector)}
 	 */
 	@Test
 	public void testNormal() {
@@ -96,7 +93,7 @@ public class VectorTest {
 	}
 
 	/**
-	 * @test succeeded when length operates equals the size of vector
+	 * test Method for {@link primitives.Vector#Length(primitives.Vector)}.
 	 */
 	@Test
 	public void testLength() {
@@ -105,7 +102,7 @@ public class VectorTest {
 	}
 
 	/**
-	 * @test succeeded when cross product operate result works correctly
+	 * test Method for {@link primitives.Vector#crossProduct(primitives.Vector)}
 	 */
 	@Test
 	public void testCrossProduct() {
@@ -116,7 +113,7 @@ public class VectorTest {
 	}
 
 	/**
-	 * @test succeeded when scale operate result is correct
+	 * test Method for {@link primitives.Vector#scale(primitives.Vector)}
 	 */
 	@Test
 	public void testScale() {
