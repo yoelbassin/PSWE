@@ -46,4 +46,8 @@ public class Polygon implements Geometry {
 	public Vector getNormal(Point3D p) {
 		return _plane.getNormal(p);
 	}
+
+	public List<Point3D> findIntersections(Ray ray) {
+		return null;
+	}
 }
