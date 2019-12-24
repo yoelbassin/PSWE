@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class SphereTest {
 	/**
-	 * Sphere normal function test
+	 * test Method for {@link geomtries.Sphere#getNormal(geomtries.Sphere)}
 	 */
 	@Test
 	public void testGetNormal() {
@@ -19,4 +19,8 @@ public class SphereTest {
 		assertEquals("Get normal function error", sphere.getNormal(p), actual);
 	}
 
+	@Test
+	public void testfindIntersections() {
+		fail();
+	}
 }
