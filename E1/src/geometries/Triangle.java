@@ -27,20 +27,19 @@ public class Triangle extends Polygon {
         Point3D p3 = this._points.get(2);
         List<Point3D> intersections = this._plane.findIntersections(ray);
         Point3D intersectionPoint = intersections.get(0);
-        if (intersectionPoint.equals(p1) || intersectionPoint.equals(p2) || intersectionPoint.equals(p3)) //if the intersection point is one of the vertexes, return the vertex
-            return intersections;
-        Vector s1 = p1.subtract(intersectionPoint).normalize();
-        Vector s2 = p2.subtract(intersectionPoint).normalize();
-        Vector s3 = p3.subtract(intersectionPoint).normalize();
-        if (s1.equals(s2) || s2.equals(s3) || s3.equals(s1)) //if the intersection point is on the axis of a side outside the triangle return null
+        Point3D p0 = ray.getBasePoint();
+        if (p0.equals(intersectionPoint))
             return null;
-        if (s1.equals(s2.scale(-1)) || s2.equals(s3.scale(-1)) || s3.equals(s1.scale(-1))) //if the intersection point is on the side, return the intersection point
+        Vector v1 = p1.subtract(p0);
+        Vector v2 = p2.subtract(p0);
+        Vector v3 = p3.subtract(p0);
+        Vector N1 = v1.crossProduct(v2).normalize();
+        Vector N2 = v2.crossProduct(v3).normalize();
+        Vector N3 = v3.crossProduct(v1).normalize();
+        Vector p = intersectionPoint.subtract(p0);
+        if (p.dotProduct(N1) > 0 && p.dotProduct(N2) > 0 && p.dotProduct(N3) > 0)
             return intersections;
-        double area = 0.5 * (p1.subtract(p2).crossProduct(p1.subtract(p3))).length();
-        double area1 = 0.5 * (intersectionPoint.subtract(p1).crossProduct(intersectionPoint.subtract(p2))).length();
-        double area2 = 0.5 * (intersectionPoint.subtract(p2).crossProduct(intersectionPoint.subtract(p3))).length();
-        double area3 = 0.5 * (intersectionPoint.subtract(p3).crossProduct(intersectionPoint.subtract(p1))).length();
-        if (area1 + area2 + area3 == area)
+        if (p.dotProduct(N1) < 0 && p.dotProduct(N2) < 0 && p.dotProduct(N3) < 0)
             return intersections;
         return null;
     }
