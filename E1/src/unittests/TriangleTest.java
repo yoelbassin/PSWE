@@ -44,7 +44,7 @@ public class TriangleTest {
          */
         ray = new Ray(new Point3D(1, 1, 0), new Vector(1, -1, -1));
         intersections = Arrays.asList(new Point3D(1, 1, 0));
-        assertEquals("Find intersection function error", intersections, triangle.findIntersections(ray));//BVA ray from a point inside the triangle
+        assertEquals("Find intersection function error", null, triangle.findIntersections(ray));//BVA ray from a point inside the triangle
         ray = new Ray(new Point3D(1, -2, 0), new Vector(0, 2, 1));
         assertEquals("Find intersection function error", null, triangle.findIntersections(ray));////BVA ray from a point outside the triangle between axis's of two sides near the side
         ray = new Ray(new Point3D(-1, -1, 0), new Vector(1, 1, 1));
@@ -54,23 +54,23 @@ public class TriangleTest {
          */
         ray = new Ray(new Point3D(1, 1, -1), new Vector(-1, -1, 1));
         intersections = Arrays.asList(new Point3D(0, 0, 0));
-        assertEquals("Find intersection function error", intersections, triangle.findIntersections(ray));//BVA ray to the vertex of the triangle
+        assertEquals("Find intersection function error", null, triangle.findIntersections(ray));//BVA ray to the vertex of the triangle
         ray = new Ray(new Point3D(-2, 0, -2), new Vector(1, 0, 3));
         assertEquals("Find intersection function error", null, triangle.findIntersections(ray));//BVA ray to a point outside the triangle on the side axis of the triangle
         ray = new Ray(new Point3D(2, 0, -1), new Vector(-1, 0, 1));
         intersections = Arrays.asList(new Point3D(1, 0, 0));
-        assertEquals("Find intersection function error", intersections, triangle.findIntersections(ray));//BVA ray to a point on the side of the triangle
+        assertEquals("Find intersection function error", null, triangle.findIntersections(ray));//BVA ray to a point on the side of the triangle
         /**
          * BVA case 3
          */
         ray = new Ray(new Point3D(0, 0, 0), new Vector(2, 1, 1));
         intersections = Arrays.asList(new Point3D(0, 0, 0));
-        assertEquals("Find intersection function error", intersections, triangle.findIntersections(ray));//BVA ray from the vertex of the triangle
+        assertEquals("Find intersection function error", null, triangle.findIntersections(ray));//BVA ray from the vertex of the triangle
         ray = new Ray(new Point3D(0, -1, 0), new Vector(0, -1, 2));
         List<Point3D> inteersections = triangle.findIntersections(ray);
         assertEquals("Find intersection function error", null, triangle.findIntersections(ray));//BVA ray from a point outside the triangle on the side axis of the triangle
         ray = new Ray(new Point3D(0, 2, 0), new Vector(0, 2, 1));
         intersections = Arrays.asList(new Point3D(0, 2, 0));
-        assertEquals("Find intersection function error", intersections, triangle.findIntersections(ray));//BVA ray from a point on the side of the triangle
+        assertEquals("Find intersection function error", null, triangle.findIntersections(ray));//BVA ray from a point on the side of the triangle
     }
 }
