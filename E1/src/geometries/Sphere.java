@@ -38,30 +38,32 @@ public class Sphere extends RadialGeometry {
 	 * @return list of intersection points
 	 */
 	public List<Point3D> findIntersections(Ray ray) {
-		List<point3D> Intersections = null;
+		List<Point3D> Intersections = null;
+		Vector dir = ray.getDir();
+		Point3D p0 = ray.getBasePoint();
 		//The name of the variables are taken   
-	    Vector u = _center.subtract(ray.p) ; // O - P0
-		tm = ray.dir.dotProduct(u); // tm = v*u
-		double d = sqrt(u.length2() - t1 * t1); // (|u|^2 - tm^2)^(0.5)	
+	    Vector u = _center.subtract(p0) ; // O - P0
+		double tm = dir.dotProduct(u); // tm = v*u
+		double d = Math.sqrt(u.length2() - tm * tm); // (|u|^2 - tm^2)^(0.5)	
 		
 		if (d >_radius)
 			return Intersections;
 		
-		th = sqrt(_radius * _radius -  d * d);
+		double th = Math.sqrt(_radius * _radius -  d * d);
 	  
-		t1= t3 + t4; // tm + th
+		double t1= tm + th; // tm + th
 		if(tm>0)
 		{
 			// P = p0 + t1 * v
-			Point3D p = ray.p.add(ray.dir.scale(t1));
-		    Intersections.add(p)
+			Point3D p = p0.add(dir.scale(t1));
+		    Intersections = Arrays.asList(p);
 		}
-		t2 = t3 -t4; // tm - th
+		double t2 = tm -th; // tm - th
 		if(t2>0)
 		{
 			 // P = p0 + t2 * v
-			Point3D p = ray.p.add(ray.dir.scale(t2));
-			Intersections.add(p)
+			Point3D p = p0.add(dir.scale(t2));
+			Intersections.add(p);
 		}
 		
 		return Intersections;
