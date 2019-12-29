@@ -6,83 +6,74 @@ import geometries.*;
 import primitives.*;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class SphereTest {
-	/**
-	 * test Method for {@link geomtries.Sphere#getNormal(geomtries.Sphere)}
-	 */
-	@Test
-	public void testGetNormal() {
-		Point3D center = new Point3D(0, 0, 0);
-		Sphere sphere = new Sphere(2, center);
-		Point3D p = new Point3D(0, 2, 0);
-		Vector actual = new Vector(0, 1, 0);
-		assertEquals("Get normal function error", sphere.getNormal(p), actual);
-	}
+    /**
+     * test Method for {@link geomtries.Sphere#getNormal(geomtries.Sphere)}
+     */
+    @Test
+    public void testGetNormal() {
+        Point3D center = new Point3D(0, 0, 0);
+        Sphere sphere = new Sphere(2, center);
+        Point3D p = new Point3D(0, 2, 0);
+        Vector actual = new Vector(0, 1, 0);
+        assertEquals("Get normal function error", sphere.getNormal(p), actual);
+    }
 
-	@Test
-	public void testfindIntersections() {
-		/**
-	 * test Method for {@link geomtries.Sphere#getNormal(geomtries.Sphere)}
-	 */
-	@Test
-	public void testGetNormal() {
-		Point3D center = new Point3D(0, 0, 0);
-		Sphere sphere = new Sphere(2, center);
-		Point3D p = new Point3D(0, 2, 0);
-		Vector actual = new Vector(0, 1, 0);
-		assertEquals("Get normal function error", sphere.getNormal(p), actual);
-	}
-
-	@Test
-	public void testfindIntersections() {
-		Sphere sphere = new Sphere(2,new Point3D(0,0,0)); // x^2 + y^2 + z^2 = 4
-		
-		/****************** EP ******************/
-		
-		// There is no intersection with the ray or with the another half line.
-		assertEquals("Sphere findIntersection error : error shouldn't intersec ",sphere.findIntersections(new Ray( new Point3D(-5,0,0), new Vector(-4,-4,0))) , null );
-		
-		//There is two intersection points.
-		
-		double x = 1.4142135623731 ;
-		Point3D p1 = new Point3D(x,x,0);
-		Point3D p2 = new Point3D(-x,-x,0);
-		List<Point3D> intersections = Arrays.asList(p1,p2);
-		assertEquals("Sphere findIntersection error " , sphere.findIntersections(new Ray( new Point3D(-2,-2,0), new Vector(1,1,0))), intersections);
-		
-		// P0 in the sphere , one intersection point .
-		x = 1.0696938456699;
-		double y = 1.6898979485566;
-		List<Point3D> intersections1 = Arrays.asList(new Point3D (x,y,0));
-		assertEquals("Sphere findIntersection error " , sphere.findIntersections(new Ray( new Point3D(-1,1,0), new Vector(3,1,0))), intersections1);
-		
-		// P0 is outside and the another half line has two intersects points.
-		assertEquals("Sphere findIntersection error : error shouldn't intersec ",sphere.findIntersections(new Ray( new Point3D(-3,-1,0), new Vector(2,1,0)) ), null );
-		
-		/****************** BVA ******************/
-		
-		//P0 is on the sphere and the ray points to the outside.
-		List<Point3D> intersections3 = Arrays.asList(new Point3D (-2,0,0));
-		assertEquals("Sphere findIntersection error " , sphere.findIntersections(new Ray( new Point3D(-2,0,0), new Vector(-1,0,0))), intersections3);
-		
-		//P0 is outside and there is no intersection.
-		assertEquals("Sphere findIntersection error " , sphere.findIntersections(new Ray( new Point3D(-3,0,0), new Vector(-1,0,0))), null);
-		
-		//P0 is O and the direction of ray orthogonal the y axis 
-		List<Point3D> intersections4 = Arrays.asList(new Point3D(-2,0,0));
-		assertEquals("Sphere findIntersection error " , sphere.findIntersections(new Ray( new Point3D(0,0,0), new Vector(-1,0,0))), intersections4 );
-		
-		//P0 is O and ray is not parallel the x axis 
-		List<Point3D> intersections5 = Arrays.asList(new Point3D (x,x,0));
-		assertEquals("Sphere findIntersection error " , sphere.findIntersections(new Ray( new Point3D(0,0,0), new Vector(2,2,0))), intersections5);
-		
-		//P0 is on the sphere and the ray parallel the x axis and cross O.
-		List<Point3D> intersections6 = Arrays.asList(new Point3D (2,0,0));
-		assertEquals("Sphere findIntersection error " , sphere.findIntersections(new Ray( new Point3D(0,0,0), new Vector(-1,0,0))), intersections6);
-		
-		// P0 is outside and the ray cross O
-		List<Point3D> intersections7 = Arrays.asList(new Point3D (2,0,0),new Point3D (-2,0,0));
-		assertEquals("Sphere findIntersection error " , sphere.findIntersections(new Ray( new Point3D(3,0,0), new Vector(-1,0,0))), intersections7);
-		
-	}
+    @Test
+    public void testfindIntersections() {
+        Sphere sphere = new Sphere(2, new Point3D(0, 0, 0)); // x^2 + y^2 + z^2 = 4
+        /****************** EP ******************/
+        // ray does not intersect with the sphere
+        assertEquals("Sphere findIntersection error : error shouldn't intersec ", null, sphere.findIntersections(new Ray(new Point3D(-4, 0, 0), new Vector(-4, -4, 0))));
+        // ray intersects with the sphere at two points
+        double x = 1.4142135623731;
+        List<Point3D> intersections = Arrays.asList(new Point3D(0, 0, 2), new Point3D(-2, 0, 0));
+        assertEquals("Sphere findIntersection error ", intersections, sphere.findIntersections(new Ray(new Point3D(-3, 0, -1), new Vector(2, 0, 2))));
+        // ray intersects with the sphere at one point, while p0 is in the sphere
+        x = 1.0696938456699;
+        double y = 1.6898979485566;
+        intersections = Arrays.asList(new Point3D(x, y, 0));
+        assertEquals("Sphere findIntersection error ", intersections, sphere.findIntersections(new Ray(new Point3D(-1, 1, 0), new Vector(3, 1, 0))));
+        // ray does not intersect with the sphere but the line have two intersection points
+        assertEquals("Sphere findIntersection error : error shouldn't intersect ", null, sphere.findIntersections(new Ray(new Point3D(-3, 0, -1), new Vector(-2, 0, -2))));
+        /****************** BVA ******************/
+        /******* BVA case 1 *******/
+        //P0 is on the sphere and the ray points to the outside
+        assertEquals("Sphere findIntersection error ", null, sphere.findIntersections(new Ray(new Point3D(-2, 0, 0), new Vector(-1, 0, 0))));
+        //P0 is outside and there is no intersection.
+        assertEquals("Sphere findIntersection error ", null, sphere.findIntersections(new Ray(new Point3D(-3, 0, 0), new Vector(-1, 0, 0))));
+        //the ray is from the center of the sphere
+        intersections = Arrays.asList(new Point3D(-2, 0, 0));
+        assertEquals("Sphere findIntersection error ", intersections, sphere.findIntersections(new Ray(new Point3D(0, 0, 0), new Vector(-1, 0, 0))));
+        //the ray is from outside the sphere to the other side of the sphere by the diameter
+        intersections = Arrays.asList(new Point3D(-2, 0, 0), new Point3D(2, 0, 0));
+        assertEquals("Sphere findIntersection error ", intersections, sphere.findIntersections(new Ray(new Point3D(3, 0, 0), new Vector(-1, 0, 0))));
+        //the ray is from the sphere to the other side of the sphere by the diameter
+        intersections = Arrays.asList(new Point3D(-2, 0, 0));
+        assertEquals("Sphere findIntersection error ", intersections, sphere.findIntersections(new Ray(new Point3D(2, 0, 0), new Vector(-1, 0, 0))));
+        //the ray is from the inside of the sphere by the diameter
+        intersections = Arrays.asList(new Point3D(-2, 0, 0));
+        assertEquals("Sphere findIntersection error ", intersections, sphere.findIntersections(new Ray(new Point3D(1, 0, 0), new Vector(-1, 0, 0))));
+        /******* BVA case 2 *******/
+        //the ray is from the sphere to the other side of the sphere
+        intersections = Arrays.asList(new Point3D(0, 2, 0));
+        assertEquals("Sphere findIntersection error ", intersections, sphere.findIntersections(new Ray(new Point3D(-2, 0, 0), new Vector(1, 1, 0))));
+        //ray is from the sphere
+        assertEquals("Sphere findIntersection error ", null, sphere.findIntersections(new Ray(new Point3D(0, 2, 0), new Vector(1, 1, 0))));
+        /******* BVA case 3 *******/
+        //ray is tangent to the sphere
+        intersections = Arrays.asList(new Point3D(0, 2, 0));
+        assertEquals("Sphere findIntersection error ", intersections, sphere.findIntersections(new Ray(new Point3D(-2, 2, 0), new Vector(1, 0, 0))));
+        //ray is from the tangent to the sphere
+        assertEquals("Sphere findIntersection error ", null, sphere.findIntersections(new Ray(new Point3D(0, 2, 0), new Vector(1, 0, 0))));
+        //ray is on the tangent line of the sphere
+        intersections = Arrays.asList(new Point3D(0, 2, 0));
+        assertEquals("Sphere findIntersection error ", null, sphere.findIntersections(new Ray(new Point3D(1, 2, 0), new Vector(1, 0, 0))));
+        /******* BVA case 4 *******/
+        //ray is orthogonal to the radius but from outside the sphere
+        assertEquals("Sphere findIntersection error ", null, sphere.findIntersections(new Ray(new Point3D(0, 3, 0), new Vector(1, 0, 0))));
+    }
 }
