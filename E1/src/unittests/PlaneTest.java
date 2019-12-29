@@ -13,7 +13,7 @@ import java.util.List;
 public class PlaneTest {
 
     /**
-     * test Method for {@link geomtries.Plane#getNormal(geomtries.Plane)}
+     * test Method for {@link geometries.Plane#getNormal (geomtries.Plane)}
      */
     @Test
     public void testGetNormal() {
@@ -27,7 +27,7 @@ public class PlaneTest {
     static Vector dir = new Vector(0, 0, 1);
 
     /**
-     * test Method for {@link geomtries.Plane#findIntersections(geomtries.Plane)}
+     * test Method for {@link geometries.Plane#findIntersections (geomtries.Plane)}
      */
     @Test
     public void testFindIntersections() {
@@ -47,11 +47,11 @@ public class PlaneTest {
         intersections = Arrays.asList(new Point3D(0, 0, 0));
         assertEquals("Find intersections function error", intersections, polygon.findIntersections(ray)); //BVA ray is orthogonal and before p0
         ray = new Ray(new Point3D(0, 0, 0), new Vector(0, 0, 1));
-        assertEquals("Find intersections function error", intersections, polygon.findIntersections(ray)); //BVA ray is orthogonal and in p0
+        assertEquals("Find intersections function error", null, polygon.findIntersections(ray)); //BVA ray is orthogonal and in p0
         ray = new Ray(new Point3D(0, 0, 0), new Vector(1, 1, 1));
-        assertEquals("Find intersections function error", intersections, polygon.findIntersections(ray)); //BVA ray begins in the plane
+        assertEquals("Find intersections function error", null, polygon.findIntersections(ray)); //BVA ray begins in the plane
         ray = new Ray(new Point3D(1, 1, 0), new Vector(1, 1, 1));
         intersections = Arrays.asList(new Point3D(1, 1, 0));
-        assertEquals("Find intersections function error", intersections, polygon.findIntersections(ray)); //BVA ray begins in the reference point of the plane
+        assertEquals("Find intersections function error", null, polygon.findIntersections(ray)); //BVA ray begins in the reference point of the plane
     }
 }
