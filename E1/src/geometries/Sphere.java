@@ -59,18 +59,16 @@ public class Sphere extends RadialGeometry {
             // P = p0 + t1 * v
             Point3D p = basePoint.add(v.scale(t1));
             Intersections.add(p);
+            if(th == 0)
+                return Intersections;
         }
-        if (t1 == 0)
-            Intersections.add(basePoint);
         double t2 = tm - th; // tm - th
         if (t2 > 0) {
             // P = p0 + t2 * v
             Point3D p = basePoint.add(v.scale(t2));
             Intersections.add(p);
         }
-        if (t2 == 0)
-            Intersections.add(basePoint);
-		if(t1 >= 0 || t2 >= 0)
+		if(t1 > 0 || t2 > 0)
 			return Intersections;
 		return null;
     }
