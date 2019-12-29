@@ -13,6 +13,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GeometriesTest {
+    /**
+     * test Method for {@link geometries.Geometries#findIntersections (geomtries.Geometries)}
+     */
     @Test
     public void testFindIntersections() {
         Triangle shape1 = new Triangle(new Point3D(0, 0, 0), new Point3D(0, 3, 0), new Point3D(4, 0, 0));
@@ -41,7 +44,6 @@ public class GeometriesTest {
         assertEquals(intersection, geometries.findIntersections(ray)); //BVA ray intersects with only one of the shapes
 
         ray = new Ray(new Point3D(1, 1, 3), new Vector(0, 0, 1));
-        intersection.clear();
-        assertEquals(intersection, geometries.findIntersections(ray)); //BVA ray does not intersect with any of the shapes
+        assertEquals(null, geometries.findIntersections(ray)); //BVA ray does not intersect with any of the shapes
     }
 }
