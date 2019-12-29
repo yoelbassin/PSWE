@@ -16,7 +16,7 @@ public class TriangleTest {
     static Triangle triangle = new Triangle(p1, p2, p3);
 
     /**
-     * test Method for {@link geomtries.Polygon#getNormal(geomtries.Polygon)}
+     * test Method for {@link geometries.Polygon#getNormal (geomtries.Polygon)}
      */
     @Test
     public void testGetNormal() {
@@ -25,7 +25,7 @@ public class TriangleTest {
     }
 
     /**
-     * test Method for {@link geomtries.Polygon#findIntersections(geomtries.Polygon)}
+     * test Method for {@link geometries.Polygon#findIntersections (geomtries.Polygon)}
      */
     @Test
     public void testFindIntersections() {
