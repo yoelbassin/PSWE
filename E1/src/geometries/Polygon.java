@@ -45,12 +45,13 @@ public class Polygon implements Geometry {
         return _plane.getNormal(p);
     }
 
+    /**
+     * finds intersections of the ray with the polygon
+     *
+     * @param ray
+     * @return intersection point
+     */
     public List<Point3D> findIntersections(Ray ray) {
-        for (int i = 0; i < _points.size(); ++i) {
-            Triangle polygon = new Triangle(_points.get(0), _points.get(i + 1), _points.get(i + 2));
-            if(polygon.findIntersections(ray) != null)
-                return polygon.findIntersections(ray);
-        }
         return null;
     }
 }
