@@ -8,6 +8,12 @@ import static primitives.Util.*;
 
 import primitives.*;
 
+/**
+ * Class represents 3D space polygon with more than three vertexes.
+ * @author bassi
+ * @author asaf0
+ *
+ */
 public class Polygon implements Geometry {
     List<Point3D> _points;
     Plane _plane;
@@ -46,7 +52,7 @@ public class Polygon implements Geometry {
     }
 
     /**
-     * finds intersections of the ray with the polygon
+     * function finds intersections of the ray with the polygon
      *
      * @param ray
      * @return intersection point
