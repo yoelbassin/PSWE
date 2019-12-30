@@ -39,9 +39,8 @@ public class Sphere extends RadialGeometry {
     }
 
    
-	/**
-	 * Find the intersection points of a ray and a sphere. Note the importance of tm
-	 * , th , t1 , t2 and the algorithm are taken from the presentation.
+/**
+* Find the intersection points of a ray and a sphere. Note the importance of tm* , th , t1 , t2 and the algorithm are taken from the presentation.
 	 * 
 	 * @param intersectable ray with an specific sphere.
 	 * @return list of intersection points
