@@ -20,11 +20,33 @@ public class Triangle extends Polygon {
     // ***************** Operations ******************** //
 
     /**
-     * finds intersection's of the ray with the triangle
+     * function finds intersection's of the ray with the triangle
      *
      * @param ray
      * @return intersection point
      */
+    @Override
+	public List<Point3D> findIntersections(Ray ray) {
+		if (this._plane.findIntersections(ray) ==null) // if there are no intersections with the plane or the ray
+														// basePoint is on the triangle
+			return null;// then return null
+		Point3D p0 = ray.getBasePoint();
+		Vector v1 = this._points.get(0).subtract(p0); // vector v1 base point at p0 and head point in p1
+		Vector v2 = this._points.get(1).subtract(p0);// vector v2 base point at p0 and head point in p2
+		Vector v3 = this._points.get(2).subtract(p0);// vector v3 base point at p0 and head point in p3
+		Vector N1 = v1.crossProduct(v2).normalize(); // N1=V1xV2
+		Vector N2 = v2.crossProduct(v3).normalize(); // N2=V2xV3
+		Vector N3 = v3.crossProduct(v1).normalize(); // N3=V3xV1
+		List<Point3D> intersections = this._plane.findIntersections(ray);// check if the intersection point is on the
+																			// triangle
+		Vector p = intersections.get(0).subtract(p0); // p vector from p0 to p1
+		if (p.dotProduct(N1) > 0 && p.dotProduct(N2) > 0 && p.dotProduct(N3) > 0) // case that p*N1, p*N2, p*N3 > 0
+			return intersections;
+		if (p.dotProduct(N1) < 0 && p.dotProduct(N2) < 0 && p.dotProduct(N3) < 0) // case that p*N1 , p*N2 , p*N3 < 0
+			return intersections;
+		return null;//Other cases
+	}
+    /*
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         if (this._plane.findIntersections(ray) == null) //if there are no intersections with the plane, or the ray's base is on the triangle return null
@@ -49,4 +71,5 @@ public class Triangle extends Polygon {
             return intersections;
         return null;
     }
+    */
 }
