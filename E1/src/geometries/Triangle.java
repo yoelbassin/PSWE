@@ -27,8 +27,8 @@ public class Triangle extends Polygon {
      */
     @Override
 	public List<Point3D> findIntersections(Ray ray) {
-		if (this._plane.findIntersections(ray) ==null) // if there are no intersections with the plane or the ray
-														// basePoint is on the triangle
+		if (this._plane.findIntersections(ray) ==null) // if there are no intersections with the plane or			
+							       //  the ray basePoint is on the triangle
 			return null;// then return null
 		Point3D p0 = ray.getBasePoint();
 		Vector v1 = this._points.get(0).subtract(p0); // vector v1 base point at p0 and head point in p1
