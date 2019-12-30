@@ -6,6 +6,12 @@ import java.util.List;
 
 import primitives.*;
 
+/**
+ * Class represents a sphere in 3D Cartezian space.
+ * @author bassi
+ * @author asaf0
+ *
+ */
 public class Sphere extends RadialGeometry {
     Point3D _center;
     // ***************** Constructors ********************** //
