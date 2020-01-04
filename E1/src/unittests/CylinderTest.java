@@ -13,8 +13,8 @@ import java.util.List;
 public class CylinderTest {
     public static Point3D basePoint = new Point3D(0, 0, 0);
     public static Vector vec = new Vector(0, 1, 0);
-    public static Ray asix = new Ray(basePoint, vec);
-    public static Cylinder cylinder = new Cylinder(1, 5, asix);
+    public static Ray axis = new Ray(basePoint, vec);
+    public static Cylinder cylinder = new Cylinder(1, 5, axis);
 
     /**
      * test Method for {@link geomtries.Cylinder#getNormal(geomtries.Cylinder)}
