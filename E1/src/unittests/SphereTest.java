@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SphereTest {
     /**
-     * test Method for {@link geomtries.Sphere#getNormal(geomtries.Sphere)}
+     * test Method for {@link geometries.Sphere#getNormal (geomtries.Sphere)}
      */
     @Test
     public void testGetNormal() {
@@ -21,9 +21,11 @@ public class SphereTest {
         Vector actual = new Vector(0, 1, 0);
         assertEquals("Get normal function error", sphere.getNormal(p), actual);
     }
-
+    /**
+     * test Method for {@link geometries.Sphere#findIntersections (geomtries.Sphere)}
+     */
     @Test
-    public void testfindIntersections() {
+    public void testFindIntersections() {
         Sphere sphere = new Sphere(2, new Point3D(0, 0, 0)); // x^2 + y^2 + z^2 = 4
         /****************** EP ******************/
         // ray does not intersect with the sphere
