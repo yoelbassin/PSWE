@@ -25,7 +25,7 @@ public class TriangleTest {
     }
 
     /**
-     * test Method for {@link geometries.Polygon#findIntersections (geomtries.Polygon)}
+     * test Method for {@link geometries.Triangle#findIntersections (geomtries.Triangle)}
      */
     @Test
     public void testFindIntersections() {
