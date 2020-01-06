@@ -58,9 +58,9 @@ public class Polygon implements Geometry {
      * @return intersection point
      */
     public List<Point3D> findIntersections(Ray ray) {
-        if (this._plane.findIntersections(ray) == null) //if there are no intersections with the plane
-            return null;
         List<Point3D> intersections = this._plane.findIntersections(ray);
+        if (intersections == null) //if there are no intersections with the plane
+            return null;
         Point3D intersectionPoint = intersections.get(0);
         for (int i = 1; i < _points.size() - 1; ++i) {
             Point3D p1 = this._points.get(0);
