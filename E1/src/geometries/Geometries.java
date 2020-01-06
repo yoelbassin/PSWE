@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * class represents a list 3D space shapes which could intersect a ray.  
+ * class represents a list 3D space shapes which could intersect a ray.
  * @author bassi
  * @author asaf0
  *
