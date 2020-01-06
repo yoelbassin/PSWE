@@ -59,30 +59,28 @@ public class Polygon implements Geometry {
      */
     public List<Point3D> findIntersections(Ray ray) {
         List<Point3D> intersections = this._plane.findIntersections(ray);
-        if (intersections == null) //if there are no intersections with the plane
+        if (this._plane.findIntersections(ray) == null) // if there are no intersections with the plane, or the ray's
+            // base is on the triangle return null
             return null;
-        Point3D intersectionPoint = intersections.get(0);
-        for (int i = 1; i < _points.size() - 1; ++i) {
-            Point3D p1 = this._points.get(0);
-            Point3D p2 = this._points.get(i);
-            Point3D p3 = this._points.get(i + 1);
-            if (intersectionPoint.equals(p1) || intersectionPoint.equals(p2) || intersectionPoint.equals(p3)) //if the intersection point is one of the vertexes, return the vertex
-                return intersections;
-            Vector s1 = p1.subtract(intersectionPoint).normalize();
-            Vector s2 = p2.subtract(intersectionPoint).normalize();
-            Vector s3 = p3.subtract(intersectionPoint).normalize();
-            if (s1.equals(s2) || s2.equals(s3) || s3.equals(s1)) //if the intersection point is on the axis of a side outside the triangle return null
-                return null;
-            if (s1.equals(s2.scale(-1)) || s2.equals(s3.scale(-1)) || s3.equals(s1.scale(-1))) //if the intersection point is on the side, return the intersection point
-                return intersections;
-            double area = 0.5 * (p1.subtract(p2).crossProduct(p1.subtract(p3))).length();
-            double area1 = 0.5 * (intersectionPoint.subtract(p1).crossProduct(intersectionPoint.subtract(p2))).length();
-            double area2 = 0.5 * (intersectionPoint.subtract(p2).crossProduct(intersectionPoint.subtract(p3))).length();
-            double area3 = 0.5 * (intersectionPoint.subtract(p3).crossProduct(intersectionPoint.subtract(p1))).length();
-            if (area1 + area2 + area3 == area) //if the area created by the three vertexes and the intersection point is equal to the original area of the triangle
-                return intersections;
+        Point3D p0 = ray.getBasePoint();
+        int size = this._points.size();
+        Vector[] v = new Vector[size];
+        Vector[] N = new Vector[size];
+        for (int i = 0; i < size; ++i)
+            v[i] = _points.get(i).subtract(p0);
+        for (int i = 0; i < size; ++i) {
+            if (i < size - 1)
+                N[i] = v[i].crossProduct(v[i + 1]).normalize();
+            if (i == size - 1)
+                N[i] = v[i].crossProduct(v[0]).normalize();
         }
-        return null;
+        Vector p = intersections.get(0).subtract(p0);
+        for (int i = 0; i < size - 1; ++i) {
+            if (!((p.dotProduct(N[i]) > 0 && p.dotProduct(N[i + 1]) > 0) || (p.dotProduct(N[i]) < 0 && p.dotProduct(N[i + 1]) < 0))) {
+                return null;
+            }
+        }
+        return intersections;
     }
 }
 
