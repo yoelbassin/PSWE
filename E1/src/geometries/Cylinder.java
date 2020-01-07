@@ -10,7 +10,7 @@ public class Cylinder extends Tube {
 	// ***************** Constructors ********************** //
 	/**
 	 * Constructs a cylinder with radius, height and axis ray
-	 * 
+	 *
 	 * @param double _radius, radius of the cylinder
 	 * @param double _height, height of the cylinder
 	 * @param Ray    _axis, axis of the cylinder
@@ -28,7 +28,7 @@ public class Cylinder extends Tube {
 	// ***************** Operations ******************** //
 	/**
 	 * Gets the direction of the normal vector of the cylinder at a certain point
-	 * 
+	 *
 	 * @param p, the point on the cylinder
 	 * @return the direction of the normal vector
 	 */
