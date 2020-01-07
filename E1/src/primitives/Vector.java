@@ -4,7 +4,7 @@ import java.lang.Math;
 
 /**
  * Class representing Cartesian 3D space vector
- * 
+ *
  */
 public class Vector {
 
@@ -13,7 +13,7 @@ public class Vector {
 	// ***************** Constructors ********************** //
 	/**
 	 * Constructs a vector with head point
-	 * 
+	 *
 	 * @param head point of the vector
 	 * @throws newIllegalException when head is (0,0,0)
 	 */
@@ -25,7 +25,7 @@ public class Vector {
 
 	/**
 	 * Constructs a vector by values of three coordinates of vector's head
-	 * 
+	 *
 	 * @param x coordinate value
 	 * @param y coordinate value
 	 * @param z coordinate value
@@ -39,7 +39,7 @@ public class Vector {
 
 	/**
 	 * Constructs a vector with three coordinates.
-	 * 
+	 *
 	 * @param x coordinate of head point
 	 * @param y coordinate of head point
 	 * @param z coordinate of head point
@@ -54,7 +54,7 @@ public class Vector {
 
 	/**
 	 * Construct head point of vector class with a vector
-	 * 
+	 *
 	 * @param other vector
 	 * @throws newIllegalException when head is (0,0,0)
 	 */
@@ -65,7 +65,7 @@ public class Vector {
 	// ***************** Getters/Setters ********************** //
 	/**
 	 * Getter of vector's head
-	 * 
+	 *
 	 * @return point of the head
 	 */
 	public Point3D getHead() {
@@ -95,38 +95,32 @@ public class Vector {
 	// ***************** Operations ******************** //
 	/**
 	 * Vector addition operation.
-	 * 
+	 *
 	 * @param other vector
 	 * @return equivalent vector
 	 */
 	public Vector add(Vector other) {
-		Point3D temp;
-		Vector newVec;
-		temp = this.head.add(other);
-		return new Vector(temp);
+		return new Vector(this.head.add(other));
 	}
 
 	/**
 	 * Vector subtraction operation.
-	 * 
+	 *
 	 * @param other Vector
 	 * @return equivalent vector.
 	 */
 	public Vector subtract(Vector other) {
-		Vector newVec;
-		newVec = this.head.subtract(other.getHead());
-		return newVec;
+		return this.head.subtract(other.getHead());
 	}
 
 	/**
 	 * The dot-product function takes two 3D space vectors and return a number as
 	 * the formula (a,b,c) * (h,y,k) = a*h+b*y+c*k
-	 * 
+	 *
 	 * @param other Vector
 	 * @return Outcome of the formula below.
 	 */
 	public double dotProduct(Vector other) {
-		double temp;
 		double x1 = head.getX().get();
 		double y1 = head.getY().get();
 		double z1 = head.getZ().get();
@@ -139,7 +133,7 @@ public class Vector {
 	/**
 	 * cross product multiplication define as the result of (a,b,c) cross(h,y,f) =
 	 * (b*f-c*y,c*h-a*f,a*y-b*h).
-	 * 
+	 *
 	 * @param other vector .
 	 * @return vector orthogonal to each one of the two vectors.
 	 */
@@ -156,7 +150,7 @@ public class Vector {
 
 	/**
 	 * Calculates the length of vector squared
-	 * 
+	 *
 	 * @return squared length of vector
 	 */
 	public double length2() {
@@ -169,7 +163,7 @@ public class Vector {
 
 	/**
 	 * Length of vector
-	 * 
+	 *
 	 * @return size of Vector
 	 */
 	public double length() {
@@ -178,7 +172,7 @@ public class Vector {
 
 	/**
 	 * Scale vector by num.
-	 * 
+	 *
 	 * @param num scale size
 	 * @return scaled vector by num
 	 */
@@ -192,7 +186,7 @@ public class Vector {
 
 	/**
 	 * Builds new vector of length 1 in the same direction
-	 * 
+	 *
 	 * @return normalized vector
 	 */
 	public Vector normalized() {
@@ -201,7 +195,7 @@ public class Vector {
 
 	/**
 	 * Makes the vector to be of length 1 keeping the direction
-	 * 
+	 *
 	 * @return normalized vector itself
 	 */
 	public Vector normalize() {
