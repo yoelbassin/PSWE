@@ -62,7 +62,47 @@ public class Tube extends RadialGeometry {
         return p.subtract(o).normalize();
     }
 
-    public List<Point3D> findIntersections(Ray ray) {
-        return null;
-    }
+   /**find intersection with a tube .
+	 * @param ray which we want to find intersections with it
+	 * @return intersection list between zero point and two points 
+	 * */
+	public List<Point3D> findIntersections(Ray ray) {
+		Point3D p0 = ray.getBasePoint();
+		Vector v = ray.getDir();
+
+		double p0x = p0.getX().get();
+		double p0y = p0.getY().get();
+
+		List<Point3D> intersections = new ArrayList<Point3D>();
+		
+		// testing collision against the body of Cylinder.
+		double vx = v.getHead().getY().get();
+		double vy = v.getHead().getY().get();
+		double A = vx * vx + vy * vy;
+		double B = 2 * (vx * p0x + vy * p0y);
+		double C = p0x * p0x + p0y * p0y - _radius * _radius;
+
+		// Solving quadratic equation
+		double t1 =0 ;
+		double t2 =0; 
+		try {
+		 t1 = (-B + Math.sqrt(B * B - 4 * A * C)) / (2 * A);
+		 t2 = (-B - Math.sqrt(B * B - 4 * A * C)) / (2 * A);
+		}
+		catch(Exception e)
+		{
+			//if delta is smaller than zero.
+			return null ;
+		}
+		
+		Point3D p1 = p0.add(v.scale(t1));	
+		intersections.add(p1);
+
+		Point3D p2 = p0.add(v.scale(t2));
+		intersections.add(p2);//then add it to list.
+		
+		// Finally we will have four distinct t values: the two possible intersections
+		// with the end caps and the two possible intersections with the sides of the
+		// cylinder .
+		return intersections;
 }
