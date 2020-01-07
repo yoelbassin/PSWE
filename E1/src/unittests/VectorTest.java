@@ -12,13 +12,12 @@ import primitives.Vector;
  */
 public class VectorTest {
     /**
-     * Test succeed when IllegalArgumentException is thrown
-     * and fail when zero
+     * Test succeed when IllegalArgumentException is thrown and fail when zero
      * vector is successfully created.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testVectorZero() {
-        Vector ZeroVector = new Vector(Point3D.ZERO);
+        new Vector(Point3D.ZERO);
     }
 
     /**
@@ -61,15 +60,15 @@ public class VectorTest {
         Vector vec1 = new Vector(1, 0, 0);
         Vector vec2 = new Vector(1, 1, 0);
         double dot = vec1.dotProduct(vec2);
-        assertEquals("Dot product function error", 1, dot, 0); //EP
+        assertEquals("Dot product function error", 1, dot, 0); // EP
         vec1 = new Vector(1, 0, 0);
         vec2 = new Vector(0, 1, 0);
         dot = vec1.dotProduct(vec2);
-        assertEquals("Dot product function error", 0, dot, 0); //BVA orthogonal Vectors
+        assertEquals("Dot product function error", 0, dot, 0); // BVA orthogonal Vectors
         vec1 = new Vector(1, 0, 0);
         vec2 = new Vector(5, 0, 0);
         dot = vec1.dotProduct(vec2);
-        assertEquals("Dot product function error", 5, dot, 0); //BVA same vectors with different length
+        assertEquals("Dot product function error", 5, dot, 0); // BVA same vectors with different length
     }
 
     /**
