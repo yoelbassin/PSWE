@@ -4,9 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import primitives.*;
+import static primitives.Util.*;
 
 /**
- * Class represents 3D space plane with a normal and a 3D space point in the plane.
+ * Class represents 3D space plane with a normal and a 3D space point in the
+ * plane.
  *
  * @author bassi
  * @author asaf0
@@ -41,7 +43,6 @@ public class Plane implements Geometry {
     }
     // ***************** Getters/Setters ********************** //
 
-
     /**
      * Gets the normal of the plane at a certain point
      *
@@ -69,16 +70,24 @@ public class Plane implements Geometry {
      * @return intersection point
      */
     public List<Point3D> findIntersections(Ray ray) {
-        List<Point3D> intersections;
-        Point3D basePoint = ray.getBasePoint();
-        Vector dir = ray.getDir();
-        if (this._normal.dotProduct(dir) == 0) // if the ray is ray in parallel to the plane (orthogonal to the normal) return null
+        Point3D p0 = ray.getBasePoint();
+        Vector v = ray.getDir();
+
+        double vn = alignZero(this._normal.dotProduct(v));
+        // if the ray is ray in parallel to the plane (orthogonal to the normal) return null
+        if (vn == 0)
             return null;
-        if (basePoint.equals(this._p)) // if the ray's base is equal to the origin point of the plane return null
+
+        Vector pp0 = null;
+        try {
+            pp0 = this._p.subtract(p0);
+        } catch(Exception e) {
+            // if the ray's base is equal to the origin point of the plane return null
             return null;
-        double t = this._normal.dotProduct(this._p.subtract(basePoint)) / this._normal.dotProduct(dir);
-        if (t <= 0) // if the plane is behind the ray, or the ray's base is on the plane return null
-            return null;
-        return intersections = Arrays.asList(basePoint.add(dir.scale(t))); //return the intersection
+        }
+
+        double t = alignZero(this._normal.dotProduct(pp0) / vn);
+        // if the plane is behind the ray, or the ray's base is on the plane return null
+        return (t <= 0) ? null : Arrays.asList(p0.add(v.scale(t))); // return the intersection
     }
 }
