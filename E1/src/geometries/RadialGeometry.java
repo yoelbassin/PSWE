@@ -15,7 +15,7 @@ public abstract class RadialGeometry implements Geometry {
 	// ***************** Getters/Setters ********************** //
 	/**
 	 * Gets the radius of the geometry
-	 * 
+	 *
 	 * @return the radius
 	 */
 	public double getRadius() {
