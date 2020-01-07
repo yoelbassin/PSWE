@@ -1,9 +1,13 @@
 package geometries;
 
-import java.util.List;
-
 import primitives.*;
 
+/**
+ *
+ * @author bassi class triangle represents a triangle via 3 points on the same
+ *         plane
+ *
+ */
 public class Triangle extends Polygon {
     // ***************** Constructor ********************** //
 
