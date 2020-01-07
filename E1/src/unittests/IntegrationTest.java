@@ -8,8 +8,6 @@ import org.junit.Test;
 import geometries.*;
 import primitives.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,10 +19,19 @@ public class IntegrationTest {
     Vector vTo = new Vector(0, 0, -1);
 
     Camera camera = new Camera(p0, vUp, vTo);
+
+    /**
+     * counts the number of intersections between the shape and the ray's from the
+     * camera
+     *
+     * @param Intersectable shape
+     * @return number of intersections
+     */
     private int countIntersections(Intersectable shape) {
         int p = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < 3; i++) { // a view plane with length of 3 pixels
+            for (int j = 0; j < 3; j++) { // a view plane with width of 3 pixels
+                // find the intersection of the ray through pixel[j,i] and the shape
                 List<Point3D> temp = shape.findIntersections(camera.constructRayThroughPixel(3, 3, j, i, 1, 3, 3));
                 if (temp != null) {
                     p = p + temp.size();
@@ -40,15 +47,24 @@ public class IntegrationTest {
      */
     @Test
     public void SphereIntegrationTest() {
-        Sphere sphere = new Sphere(1, new Point3D(0, 0, -3)); //sphere first test case - 2 intersection points
+        // sphere first test case - 2 intersection points
+        Sphere sphere = new Sphere(1, new Point3D(0, 0, -3));
         assertEquals(2, countIntersections(sphere), 0);
-        sphere = new Sphere(2.5, new Point3D(0, 0, -3)); //sphere second test case - 18 intersection points
+
+        // sphere second test case - 18 intersection points
+        sphere = new Sphere(2.5, new Point3D(0, 0, -3));
         assertEquals(18, countIntersections(sphere), 0);
-        sphere = new Sphere(1.5, new Point3D(0, 0, -2)); //sphere third test case - 10 intersection points
+
+        // sphere third test case - 10 intersection points
+        sphere = new Sphere(1.5, new Point3D(0, 0, -2));
         assertEquals(10, countIntersections(sphere), 0);
-        sphere = new Sphere(5, new Point3D(0, 0, -1)); //sphere fourth test case - 9 intersection points
+
+        // sphere fourth test case - 9 intersection points
+        sphere = new Sphere(5, new Point3D(0, 0, -1));
         assertEquals(9, countIntersections(sphere), 0);
-        sphere = new Sphere(1, new Point3D(0, 0, 1)); //sphere fifth test case - 0 intersection points
+
+        // sphere fifth test case - 0 intersection points
+        sphere = new Sphere(1, new Point3D(0, 0, 1));
         assertEquals(0, countIntersections(sphere), 0);
     }
 
@@ -57,11 +73,16 @@ public class IntegrationTest {
      */
     @Test
     public void PlaneIntegrationTest() {
-        Plane plane = new Plane(new Point3D(0, 0, -5), new Vector(0, 0, -1)); //plane first test case - 9 intersection points
+        // plane first test case - 9 intersection points
+        Plane plane = new Plane(new Point3D(0, 0, -5), new Vector(0, 0, -1));
         assertEquals(9, countIntersections(plane), 0);
-        plane = new Plane(new Point3D(0, 0, -5), new Vector(0, -0.5, -1)); //plane second test case - 9 intersection points
+
+        // plane second test case - 9 intersection points
+        plane = new Plane(new Point3D(0, 0, -5), new Vector(0, -0.5, -1));
         assertEquals(9, countIntersections(plane), 0);
-        plane = new Plane(new Point3D(0, 0, -5), new Vector(0, -1, -0.5)); //plane third test case - 6 intersection points
+
+        // plane third test case - 6 intersection points
+        plane = new Plane(new Point3D(0, 0, -5), new Vector(0, -1, -0.5));
         assertEquals(6, countIntersections(plane), 0);
     }
 
@@ -70,9 +91,12 @@ public class IntegrationTest {
      */
     @Test
     public void TriangleIntegrationTest() {
-        Triangle triangle = new Triangle(new Point3D(0, -1, -2), new Point3D(-1, 1, -2), new Point3D(1, 1, -2)); //triangle first test case - 1 intersection point
+        // triangle first test case - 1 intersection point
+        Triangle triangle = new Triangle(new Point3D(0, -1, -2), new Point3D(-1, 1, -2), new Point3D(1, 1, -2));
         assertEquals(1, countIntersections(triangle), 0);
-        triangle = new Triangle(new Point3D(0, -20, -2), new Point3D(-1, 1, -2), new Point3D(1, 1, -2)); //triangle second test case - 2 intersection points
+
+        // triangle second test case - 2 intersection points
+        triangle = new Triangle(new Point3D(0, -20, -2), new Point3D(-1, 1, -2), new Point3D(1, 1, -2));
         assertEquals(2, countIntersections(triangle), 0);
     }
 }
