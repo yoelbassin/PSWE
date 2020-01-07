@@ -6,6 +6,9 @@ import primitives.*;
 import geometries.*;
 import org.junit.Test;
 
+/**
+ * Test class of Tube {@link geometries.Tube}}
+ */
 public class TubeTest {
     public static Point3D basePoint = new Point3D(0, 0, 0);
     public static Vector vec = new Vector(0, 1, 0);
