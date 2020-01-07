@@ -1,6 +1,9 @@
 package geometries;
 
 import primitives.*;
+/**
+ * class Tube represents a tube in the space
+ */
 
 import static primitives.Util.*;
 
@@ -42,13 +45,20 @@ public class Tube extends RadialGeometry {
     public Vector getNormal(Point3D p) {
         Point3D p0 = _axisRay.getBasePoint();
         Vector v = _axisRay.getDir();
-        if (p.equals(p0))
+
+        Vector u = null;
+        try {
+            u = p.subtract(p0); // vector from p0 to p
+        } catch (Exception e) {
             return v;
-        Vector u = p.subtract(p0); // vector from p0 to p
-        double t = v.dotProduct(u); // size of projection of vector u on the ray
+        }
+
+        double t = alignZero(v.dotProduct(u)); // size of projection of vector u on the ray
+        if (t == 0)
+            return p.subtract(p0).normalize();
+
         // point on the ray and plane crossing P and orthogonal to the ray
-        Point3D o;
-        o = p0.add(v.scale(t));
+        Point3D o = p0.add(v.scale(t));
         return p.subtract(o).normalize();
     }
 
