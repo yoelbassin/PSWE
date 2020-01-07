@@ -1,6 +1,5 @@
 package geometries;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,28 +58,35 @@ public class Polygon implements Geometry {
      */
     public List<Point3D> findIntersections(Ray ray) {
         List<Point3D> intersections = this._plane.findIntersections(ray);
-        if (this._plane.findIntersections(ray) == null) // if there are no intersections with the plane, or the ray's
+        if (intersections == null) // if there are no intersections with the plane, or the ray's
             // base is on the triangle return null
             return null;
+
         Point3D p0 = ray.getBasePoint();
         int size = this._points.size();
         Vector[] v = new Vector[size];
-        Vector[] N = new Vector[size];
+        Vector[] n = new Vector[size];
+        double[] un = new double[size];
+
+        // vi = pi - p0
         for (int i = 0; i < size; ++i)
             v[i] = _points.get(i).subtract(p0);
-        for (int i = 0; i < size; ++i) {
-            if (i < size - 1)
-                N[i] = v[i].crossProduct(v[i + 1]).normalize();
-            if (i == size - 1)
-                N[i] = v[i].crossProduct(v[0]).normalize();
-        }
-        Vector p = intersections.get(0).subtract(p0);
-        for (int i = 0; i < size - 1; ++i) {
-            if (!((p.dotProduct(N[i]) > 0 && p.dotProduct(N[i + 1]) > 0) || (p.dotProduct(N[i]) < 0 && p.dotProduct(N[i + 1]) < 0))) {
+        // Ni = Vi x Vi+1
+        for (int i = 0; i < size; ++i)
+            n[i] = v[i].crossProduct(v[(i < size - 1) ? i + 1 : 0]).normalize();
+
+        Vector u = intersections.get(0).subtract(p0);
+        // uni = u*Ni
+        for (int i = 0; i < size; ++i)
+            if ((un[i] = alignZero(u.dotProduct(n[i]))) == 0)
                 return null;
-            }
-        }
+
+        double sign = un[0];
+        for (int i = 1; i < size; ++i)
+            // if the N1...Nn do not have the same sign, return null
+            if ((sign < 0 && un[i] > 0) || (sign > 0 && un[i] < 0))
+                return null;
+
         return intersections;
     }
 }
-
