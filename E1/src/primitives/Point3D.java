@@ -100,8 +100,6 @@ public class Point3D {
      * @return the vector which ends in the point and begins in other .
      */
     public Vector subtract(Point3D other) {
-        Point3D temp;
-        Vector vec;
         double x1 = getX().get();
         double y1 = getY().get();
         double z1 = getZ().get();
