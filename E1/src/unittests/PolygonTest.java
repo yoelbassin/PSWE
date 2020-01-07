@@ -9,6 +9,9 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Test class of Polygon {@link geometries.Polygon}}
+ */
 public class PolygonTest {
     /**
      * test Method for {@link geometries.Polygon (geomtries.Polygon)}
@@ -22,7 +25,7 @@ public class PolygonTest {
         try {
             // Test of the polygon constructor
             Point3D p4 = new Point3D(0, 1, 0);
-            Polygon polygon = new Polygon(p1, p2, p3, p4);
+            new Polygon(p1, p2, p3, p4);
             assertTrue(true);
         } catch (IllegalArgumentException e) {
             fail("threw an unwanted exception");
@@ -30,7 +33,7 @@ public class PolygonTest {
         // ****** BVA ******//
         try {
             Point3D p4 = new Point3D(0, 1, 3);
-            Polygon polygon = new Polygon(p1, p2, p3, p4);
+            new Polygon(p1, p2, p3, p4);
             fail("didn't throw exception"); // BVA constructing a polygon with a point not on the same plane as the
             // others
         } catch (IllegalArgumentException e) {
@@ -38,7 +41,7 @@ public class PolygonTest {
         }
         try {
             Point3D p4 = new Point3D(0, 1, -3);
-            Polygon polygon = new Polygon(p1, p2, p3, p4);
+            new Polygon(p1, p2, p3, p4);
             fail("didn't throw exception"); // BVA constructing a polygon with a point not on the same plane as the
             // others
         } catch (IllegalArgumentException e) {
@@ -47,7 +50,8 @@ public class PolygonTest {
     }
 
     /**
-     * test Method for {@link geometries.Polygon#findIntersections}  (geomtries.Polygon)}
+     * test Method for
+     * {@link geometries.Polygon#findIntersections (geomtries.Polygon)}
      */
     @Test
     public void testFindIntersections() {
@@ -58,19 +62,20 @@ public class PolygonTest {
         Polygon square = new Polygon(p1, p2, p3, p4);
         Ray ray = new Ray(new Point3D(0.25, 0.25, -1), new Vector(0, 0, 1));
         List<Point3D> intersections = Arrays.asList(new Point3D(0.25, 0.25, 0));
-        assertEquals("Polygon findIntersection error ", intersections, square.findIntersections(ray)); //inside square
+        assertEquals("Polygon findIntersection error ", intersections, square.findIntersections(ray)); // inside square
         ray = new Ray(new Point3D(-1, -1, -1), new Vector(0, 0, 1));
-        assertEquals("Polygon findIntersection error ", null, square.findIntersections(ray)); //outside square
+        assertEquals("Polygon findIntersection error ", null, square.findIntersections(ray)); // outside square
         p1 = new Point3D(-2, 0, 0);
         p2 = new Point3D(-1, 2, 0);
         p3 = new Point3D(1, 2, 0);
         p4 = new Point3D(2, 0, 0);
         Point3D p5 = new Point3D(0, -2, 0);
-        Polygon pentagon = new Polygon(p1,p2,p3,p4,p5);
+        Polygon pentagon = new Polygon(p1, p2, p3, p4, p5);
         ray = new Ray(new Point3D(0, 0, -1), new Vector(0, 0, 1));
         intersections = Arrays.asList(new Point3D(0, 0, 0));
-        assertEquals("Polygon findIntersection error ", intersections, pentagon.findIntersections(ray)); //inside pentagon
+        assertEquals("Polygon findIntersection error ", intersections, pentagon.findIntersections(ray)); // inside
+        // pentagon
         ray = new Ray(new Point3D(-3, 3, -1), new Vector(0, 0, 1));
-        assertEquals("Polygon findIntersection error ", null, pentagon.findIntersections(ray)); //outside pentagon
-        }
+        assertEquals("Polygon findIntersection error ", null, pentagon.findIntersections(ray)); // outside pentagon
+    }
 }
