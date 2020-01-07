@@ -7,9 +7,9 @@ import org.junit.Test;
 import geometries.*;
 import primitives.*;
 
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * Test class of Cylinder {@link geometries.Cylinder}}
+ */
 public class CylinderTest {
     public static Point3D basePoint = new Point3D(0, 0, 0);
     public static Vector vec = new Vector(0, 1, 0);
@@ -33,16 +33,4 @@ public class CylinderTest {
         p = new Point3D(0, 5, 0);
         assertEquals(cylinder.getNormal(p), actual);
     }
-/**
- @Test public void testFindIntersections() {
- Ray axis = new Ray(new Point3D(0, 0, 0), new Vector(0, 0, 1));
- Cylinder cylinder = new Cylinder(2, 5, axis);
- Ray ray = new Ray(new Point3D(0, 5, 0), new Vector(0, -5, 3));
- List<Point3D> intersections = Arrays.asList(new Point3D(0, 2, 1.8));
- assertEquals("find intersection function error", intersections, cylinder.findIntersections(ray));//ep
- ray = new Ray(new Point3D(0, 5, 3), new Vector(0, -5, 3));
- intersections = Arrays.asList(new Point3D(0, 2, 3));
- assertEquals("find intersection function error", intersections, cylinder.findIntersections(ray));//BVA orthogonal to axis
- }
- **/
 }
