@@ -6,6 +6,7 @@ import primitives.*;
 
 /**
  * Shapes that implements this interface could find intersect points with rays.
+ *
  * @author bassi
  * @author asaf0
  *
