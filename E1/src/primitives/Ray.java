@@ -42,9 +42,12 @@ public class Ray {
     // ***************** Administration ******************** //
     @Override
     public boolean equals(Object other) {
-        if (this == other) return true;
-        if (other == null) return false;
-        if (!(other instanceof Ray)) return false;
+        if (this == other)
+            return true;
+        if (other == null)
+            return false;
+        if (!(other instanceof Ray))
+            return false;
         Ray obj = (Ray) other;
         return dir.equals(obj.getDir()) && p.equals(obj.p);
     }
