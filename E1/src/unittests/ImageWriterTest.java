@@ -16,6 +16,6 @@ public class ImageWriterTest {
                 if (i % 50 == 0 || j % 50 == 0)
                     image.writePixel(j, i, Color.pink);
         }
-        image.writeToimage();
+        image.writeToImage();
     }
 }
