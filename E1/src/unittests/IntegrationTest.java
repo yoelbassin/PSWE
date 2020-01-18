@@ -6,6 +6,7 @@ import elements.Camera;
 import org.junit.Test;
 
 import geometries.*;
+import geometries.Intersectable.GeoPoint;
 import primitives.*;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class IntegrationTest {
         for (int i = 0; i < 3; i++) { // a view plane with length of 3 pixels
             for (int j = 0; j < 3; j++) { // a view plane with width of 3 pixels
                 // find the intersection of the ray through pixel[j,i] and the shape
-                List<Point3D> temp = shape.findIntersections(camera.constructRayThroughPixel(3, 3, j, i, 1, 3, 3));
+                List<GeoPoint> temp = shape.findIntersections(camera.constructRayThroughPixel(3, 3, j, i, 1, 3, 3));
                 if (temp != null) {
                     p = p + temp.size();
                 }
