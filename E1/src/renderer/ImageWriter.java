@@ -49,7 +49,7 @@ public class ImageWriter {
 
     // ***************** Operations ******************** //
 
-    public void writeToimage(){
+    public void writeToImage(){
         File ouFile = new File(PROJECT_PATH + "/" + _imageName + ".jpg");
         try {
             javax.imageio.ImageWriter jpgWriter = ImageIO.getImageWritersByFormatName("jpg").next();
