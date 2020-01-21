@@ -8,9 +8,6 @@ import primitives.Vector;
 import scene.Scene;
 
 import static geometries.Intersectable.GeoPoint;
-import static primitives.Util.alignZero;
-
-import java.awt.*;
 import java.util.List;
 
 /**
@@ -73,7 +70,7 @@ public class Render {
         double ks = intersection.geometry.getMaterial().getKs();
         int nShininess = intersection.geometry.getMaterial().getShininess();
         for (LightSource lightSource : scene.getLights()) {
-            Vector l = lightSource.getL(intersection.point).normalize();
+            Vector l = lightSource.getL(intersection.point);
             if ((n.dotProduct(l) > 0 && n.dotProduct(v) > 0) || (n.dotProduct(l) < 0 && n.dotProduct(v) < 0)) {
                 Color lightIntensity = lightSource.getIntensity(intersection.point);
                 color = color.add((calcDiffusive(kd, l, n, lightIntensity)), calcSpecular(ks, l, n, v, nShininess, lightIntensity));

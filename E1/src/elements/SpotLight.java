@@ -29,10 +29,9 @@ public class SpotLight extends PointLight implements LightSource {
 
     @Override
     public Color getIntensity(Point3D p) {
-        double cos = _direction.dotProduct(getL(p).normalize());
-        if (cos < 0) //if the point is behind the light (90 deg or more)
-            return new Color(0, 0, 0);
-        Color color = super.getIntensity(p);
-        return color.scale(cos);
+        double cos = _direction.dotProduct(getL(p));
+        if (cos <= 0) //if the point is behind the light (90 deg or more)
+            return Color.BLACK;
+        return super.getIntensity(p).scale(cos);
     }
 }

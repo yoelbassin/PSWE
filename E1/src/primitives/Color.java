@@ -15,7 +15,7 @@ public class Color {
      */
     double _r = 0.0, _g = 0.0, _b = 0.0;
 
-    final static Color BLACK = new Color();
+    public final static Color BLACK = new Color();
 
     /**
      * Default constructor - to generate Black Color

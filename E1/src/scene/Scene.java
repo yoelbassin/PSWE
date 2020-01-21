@@ -6,8 +6,6 @@ import elements.LightSource;
 import geometries.Geometries;
 import geometries.Intersectable;
 import primitives.Color;
-import primitives.Point3D;
-import primitives.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
