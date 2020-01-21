@@ -68,17 +68,49 @@ public class Render {
         Vector n = intersection.geometry.getNormal(intersection.point);
         double kd = intersection.geometry.getMaterial().getKd();
         double ks = intersection.geometry.getMaterial().getKs();
+        double kR = intersection.geometry.getMaterial().getKr();
+        double kT = intersection.geometry.getMaterial().getKt();
         int nShininess = intersection.geometry.getMaterial().getShininess();
         for (LightSource lightSource : scene.getLights()) {
             Vector l = lightSource.getL(intersection.point);
             if ((n.dotProduct(l) > 0 && n.dotProduct(v) > 0) || (n.dotProduct(l) < 0 && n.dotProduct(v) < 0)) {
+                if(unshaded(l,n,intersection)) {
                 Color lightIntensity = lightSource.getIntensity(intersection.point);
                 color = color.add((calcDiffusive(kd, l, n, lightIntensity)), calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+                }
             }
         }
         return color;
     }
-
+    
+ private static final double EPS = 1.0;
+    /**
+     * 
+     * @param l
+     * @param n
+     * @param geopoint
+     * @return
+     */
+    private boolean unshaded(Vector l,Vector n, GeoPoint geopoint)
+    {
+    	Vector lightDirection = l.scale(-1);//from point to light source
+    	
+    	Vector epsVector = n.scale(EPS);
+    	Point3D point = geopoint.point.add(epsVector);
+    	
+    	Ray lightRay = new Ray(point , lightDirection);
+    	
+    	List<GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
+    	
+    	//Flat geometries cannot self intersect
+    	if(geopoint.geometry instanceof FlatGeometry)
+    	{
+    	intersections.remove(geopoint);		
+    	
+    	}
+    	
+    	return intersections.isEmpty();
+    }
     public Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
         double diffusive = kd * Math.abs(l.dotProduct(n));
         return lightIntensity.scale(diffusive);
