@@ -11,8 +11,20 @@ import primitives.*;
  */
 public abstract class Geometry implements Intersectable {
     Color emission;
-    public Material material;
+    Material material;
+
     // ***************** Getters/Setters ********************** //
+
+    /**
+     * setter of the material of the geometry
+     *
+     * @param kd        - diffusion attenuation coefficient
+     * @param ks        - specular attenuation coefficient
+     * @param shininess - shininess power
+     */
+    public void setMaterial(double kd, double ks, int shininess) {
+        this.material = new Material(kd, ks, shininess);
+    }
 
     /**
      * setter of the emission light of the geometry
@@ -38,7 +50,7 @@ public abstract class Geometry implements Intersectable {
      * @return the material
      */
     public Material getMaterial() {
-        return material;
+        return this.material;
     }
 
     /**
