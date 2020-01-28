@@ -1,6 +1,7 @@
 package geometries;
 
 import primitives.Color;
+import primitives.Material;
 
 /**
  * class represents an abstract base class of radial geometries
@@ -17,9 +18,10 @@ public abstract class RadialGeometry extends Geometry {
         }
     }
 
-    public RadialGeometry(Color emission, double _radius) {
+    public RadialGeometry(Color emission, Material material, double _radius) {
         this(_radius);
-        setEmission(emission);
+        this.emission = emission;
+        this.material = material;
     }
     // ***************** Getters/Setters ********************** //
 
