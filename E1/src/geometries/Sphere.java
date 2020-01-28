@@ -39,7 +39,20 @@ public class Sphere extends RadialGeometry {
      */
     public Sphere(Color emission, double _radius, Point3D _center) {
         this(_radius, _center);
-        setEmission(emission);
+        this.emission = emission;
+    }
+
+    /**
+     * constructs a sphere with a radius, center point and a color
+     *
+     * @param emission the color of the sphere
+     * @param material the material of the sphere
+     * @param _radius, the radius of the sphere
+     * @param _center, the center point of the sphere
+     */
+    public Sphere(Color emission, Material material, double _radius, Point3D _center) {
+        this(emission, _radius, _center);
+        this.material = material;
     }
     // ***************** Operations ******************** //
 
@@ -81,10 +94,10 @@ public class Sphere extends RadialGeometry {
             return null;
         double t1 = alignZero(tm + th); // calculate t1 with the equation t1 = tm + th
         double t2 = alignZero(tm - th); // //calculate t1 with the equation t1 = tm - th.
-        if ((t1 > 0 || t2 > 0 )&& p0.equals(Point3D.ZERO)) {
+        if (t1 > 0 || t2 > 0) {
             List<GeoPoint> intersections = new ArrayList<>();
             // find point with the equation : P = p0 + t1 * v
-            if (t1 > 0 )
+            if (t1 > 0)
                 intersections.add(new GeoPoint(this, p0.add(v.scale(t1))));
             if (t2 > 0)
                 intersections.add(new GeoPoint(this, p0.add(v.scale(t2))));
