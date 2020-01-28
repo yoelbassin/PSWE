@@ -81,10 +81,10 @@ public class Sphere extends RadialGeometry {
             return null;
         double t1 = alignZero(tm + th); // calculate t1 with the equation t1 = tm + th
         double t2 = alignZero(tm - th); // //calculate t1 with the equation t1 = tm - th.
-        if (t1 > 0 || t2 > 0) {
+        if ((t1 > 0 || t2 > 0 )&& p0.equals(Point3D.ZERO)) {
             List<GeoPoint> intersections = new ArrayList<>();
             // find point with the equation : P = p0 + t1 * v
-            if (t1 > 0)
+            if (t1 > 0 )
                 intersections.add(new GeoPoint(this, p0.add(v.scale(t1))));
             if (t2 > 0)
                 intersections.add(new GeoPoint(this, p0.add(v.scale(t2))));
