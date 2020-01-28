@@ -14,28 +14,7 @@ public abstract class Geometry implements Intersectable {
     Material material;
 
     // ***************** Getters/Setters ********************** //
-
-    /**
-     * setter of the material of the geometry
-     *
-     * @param kd        - diffusion attenuation coefficient
-     * @param ks        - specular attenuation coefficient
-     * @param shininess - shininess power
-     */
-    public void setMaterial(double kd, double ks, int shininess) {
-        this.material = new Material(kd, ks, shininess);
-    }
-
-    /**
-     * setter of the emission light of the geometry
-     *
-     * @param emission - the emission light color
-     */
-    public void setEmission(Color emission) {
-        this.emission = emission;
-    }
-
-    /**
+        /**
      * getter of the emission light of the geometry
      *
      * @return the emission light
