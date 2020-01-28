@@ -24,7 +24,7 @@ public class Geometries implements Intersectable {
     /**
      * constructs a list with geometries (one or more)
      *
-     * @param list of geometry shapes.
+     * @param geometries - list of geometry shapes.
      */
     public Geometries(Intersectable... geometries) {
         for (int i = 0; i < geometries.length; ++i) {
