@@ -149,20 +149,19 @@ public class Render {
      * @param geopoint - the transparency in the point
      * @return the transparency intense
      */
-    private double transparency(Vector l, Vector n, GeoPoint geopoint) {
+    private double transparency(Vector l, Vector n, GeoPoint geopoint, double d) {
         Vector lightDirection = l.scale(-1); // from point to light source
         Vector epsVector = n.scale(n.dotProduct(lightDirection) > 0 ? EPS : -EPS);
         Point3D point = geopoint.point.add(epsVector);
         Ray lightRay = new Ray(point, lightDirection);
         List<GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
-        if (intersections == null)
-            return 1;
+        if (intersections == null) return 1;
         double ktr = 1;
         for (GeoPoint gp : intersections)
-            ktr *= gp.geometry.getMaterial().getKt();
+            if (gp.point.distance(geopoint.point) <= d)
+                ktr *= gp.geometry.getMaterial().getKt();
         return ktr;
     }
-
     /**
      * the function finds the closest intersection point using the getClosestPoint
      * that take a intersection list of geopoints and return the closest.
@@ -174,7 +173,8 @@ public class Render {
         List<GeoPoint> points = scene.getGeometries().findIntersections(ray);
         if (points == null)
             return null;
-        return getClosestPoint(points);
+        Point3D p0 = ray.getBasePoint();
+        return pointClosestTo(points, p0);
     }
 
     /**
@@ -241,13 +241,24 @@ public class Render {
 
 
     /**
-     * finds to closest intersection of the ray with geometry
+     * finds closest intersection of the ray with geometry
      *
      * @param points - the intersection point
      * @return the closest point
      */
     private GeoPoint getClosestPoint(List<GeoPoint> points) {
         Point3D p0 = scene.getCamera().getP0();
+        return pointClosestTo(points, p0);
+    }
+
+    /**
+     * finds the closest point from a given list to a point
+     *
+     * @param points
+     * @param p0
+     * @return the closest point
+     */
+    private GeoPoint pointClosestTo(List<GeoPoint> points, Point3D p0) {
         double minValue = points.get(0).getPoint().distance(p0);
         GeoPoint minPoint = points.get(0);
         for (int i = 0; i < points.size(); ++i) {
