@@ -9,6 +9,7 @@ public class Material {
     int _nShininess;
     double _kR;
     double _kT;
+    double matte;
 
     // ***************** Constructors ********************** //
 
@@ -40,6 +41,22 @@ public class Material {
         this(kd, ks, shininess);
         _kR = kr;
         _kT = kt;
+    }
+
+    /**
+     * creates a material for a geometry
+     *
+     * @param kd        - diffusion attenuation coefficient
+     * @param ks        - specular attenuation coefficient
+     * @param shininess - shininess power
+     * @param kr        - reflection coefficient
+     * @param kt        - transparency coefficient
+     */
+    public Material(double kd, double ks, int shininess, double kr, double kt, double matte) {
+        this(kd, ks, shininess);
+        _kR = kr;
+        _kT = kt;
+        this.matte = matte;
     }
     // ***************** Getters/Setters ********************** //
 
@@ -86,5 +103,9 @@ public class Material {
      */
     public double getKt() {
         return _kT;
+    }
+
+    public double getMatte() {
+        return matte;
     }
 }
