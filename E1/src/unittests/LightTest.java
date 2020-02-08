@@ -21,9 +21,13 @@ public class LightTest {
         scene.setDistance(200);
         scene.setAmbient(new AmbientLight(new Color(255, 255, 255), 0));
         scene.setBackground(Color.BLACK);
+        scene.setSampleCount(80);
         return scene;
     }
 
+    /**
+     * test case for lighting
+     */
     @Test
     public void lightingTest() {
         Scene scene = createScene("Basic Light Tests");
@@ -105,6 +109,9 @@ public class LightTest {
         render.writeToImage();
     }
 
+    /**
+     * test case for shadows
+     */
     @Test
     public void shadowTest() {
         Scene scene = createScene("Shadow tests");
@@ -225,6 +232,9 @@ public class LightTest {
         render.writeToImage();
     }
 
+    /**
+     * test case for refraction functionality
+     */
     @Test
     public void transparencyTest() {
         Scene scene = createScene("Transparency tests");
@@ -246,17 +256,20 @@ public class LightTest {
         render.writeToImage();
     }
 
+    /**
+     * integration tests for reflection and refraction
+     */
     @Test
     public void testReflectionRefracted() {
-        Scene scene = createScene("Test scene 5");
+        Scene scene = createScene("reflection test");
         scene.setDistance(150);
         Geometries geometries = new Geometries();
         scene.setGeometries(geometries);
-        Plane plane = new Plane(new Color(0,0,0), new Material(0.5, 0.5, 300, 0.8, 0), new Point3D(0,50,60), new Vector(0,1,0) );
-        Sphere sphere = new Sphere(new Color(0,0,20), new Material(0.5, 0.5, 300, 0.2, 0.5), 20, new Point3D(0, 30, 80));
-        Sphere sphere2 = new Sphere(new Color(0,20,0), new Material(0.5, 0.5, 300, 0.2, 0), 9, new Point3D(0, 30, 80));
-        Sphere sphere3 = new Sphere(new Color(20,20,0), new Material(0.5, 0.5, 300, 0.2, 0), 10, new Point3D(0, 0, 80));
-        Sphere sphere4 = new Sphere(new Color(20,20,20), new Material(0.5, 0.5, 300, 0.2, 0), 5, new Point3D(0, -15, 80));
+        Plane plane = new Plane(new Color(0, 0, 0), new Material(0.5, 0.5, 300, 0.8, 0), new Point3D(0, 50, 60), new Vector(0, 1, 0));
+        Sphere sphere = new Sphere(new Color(0, 0, 20), new Material(0.5, 0.5, 300, 0.2, 0.5, 1), 20, new Point3D(0, 30, 80));
+        Sphere sphere2 = new Sphere(new Color(0, 20, 0), new Material(0.5, 0.5, 300, 0.2, 0), 9, new Point3D(0, 30, 80));
+        Sphere sphere3 = new Sphere(new Color(20, 20, 0), new Material(0.5, 0.5, 300, 0.2, 0), 10, new Point3D(0, 0, 80));
+        Sphere sphere4 = new Sphere(new Color(20, 20, 20), new Material(0.5, 0.5, 300, 0.2, 0), 5, new Point3D(0, -15, 80));
         geometries.add(sphere3, sphere4, sphere2, plane, sphere);
 
         Point3D pos = new Point3D(20, -50, 0);
@@ -264,7 +277,72 @@ public class LightTest {
 
         PointLight point_light = new PointLight(color, pos, 1, 0.0005, 0.000005);
 
-        ImageWriter imageWriter = new ImageWriter("triangle-sphere-reflection", 500, 500, 1200, 1200);
+        ImageWriter imageWriter = new ImageWriter("spheres building", 500, 500, 1200, 1200);
+        List<LightSource> lights = new ArrayList<LightSource>();
+        lights.add(point_light);
+        scene.setLights(lights);
+        Render render = new Render(imageWriter, scene);
+        render.renderImage();
+        render.writeToImage();
+    }
+
+    /**
+     * test case for matte and glossy surfaces
+     */
+    @Test
+    public void testGlossySurface() {
+        Scene scene = createScene("Glossy test");
+        scene.setDistance(200);
+        Geometries geometries = new Geometries();
+        scene.setGeometries(geometries);
+        Plane plane = new Plane(new Color(0, 0, 0), new Material(0.5, 0.5, 300, 0.4, 0, 0.2), new Point3D(0, 20, 100), new Vector(0, 1, 0)); //ground
+        Plane plane2 = new Plane(new Color(0, 30, 30), new Material(0.5, 0.5, 1200, 0, 0, 0), new Point3D(0, 20, 600), new Vector(0, 0, 1)); //background plane
+        Sphere sphere = new Sphere(new Color(0, 0, 20), new Material(0.5, 0.5, 1200, 0.5, 0, 0.1), 20, new Point3D(75, -3, 140)); //sphere 1
+        Sphere sphere2 = new Sphere(new Color(0, 0, 20), new Material(0.5, 0.5, 1200, 0.5, 0, 0.1), 20, new Point3D(25, -3, 140)); //sphere 2
+        Sphere sphere3 = new Sphere(new Color(0, 0, 20), new Material(0.5, 0.5, 1200, 0.5, 0, 0.1), 20, new Point3D(-75, -3, 140)); //sphere 3
+        Sphere sphere4 = new Sphere(new Color(0, 0, 20), new Material(0.5, 0.5, 1200, 0.5, 0, 0.1), 20, new Point3D(-25, -3, 140)); //sphere 4
+        Polygon square1 = new Polygon(new Color(0, 0, 0), new Material(0.1, 0.1, 300, 0, 0.9, 0.2), new Point3D(75, 20, 100), new Point3D(36, 20, 100), new Point3D(36, -40, 100), new Point3D(75, -40, 100)); //window for sphere 1
+        Polygon square2 = new Polygon(new Color(0, 0, 0), new Material(0.1, 0.1, 300, 0, 0.9, 0.5), new Point3D(1, 20, 100), new Point3D(34, 20, 100), new Point3D(34, -40, 100), new Point3D(1, -40, 100)); //window for sphere 2
+        Polygon square3 = new Polygon(new Color(0, 0, 0), new Material(0.1, 0.1, 300, 0, 0.9, 1), new Point3D(-75, 20, 100), new Point3D(-36, 20, 100), new Point3D(-36, -40, 100), new Point3D(-75, -40, 100)); //window for sphere 3
+        Polygon square4 = new Polygon(new Color(0, 0, 0), new Material(0.1, 0.1, 300, 0, 0.9, 2), new Point3D(-1, 20, 100), new Point3D(-34, 20, 100), new Point3D(-34, -40, 100), new Point3D(-1, -40, 100)); //window for sphere 4
+
+        geometries.add(plane, plane2, sphere, sphere2, sphere3, sphere4, square1, square2, square3, square4);
+
+        Point3D pos = new Point3D(0, -30, 30);
+        Point3D pos2 = new Point3D(0, -60, 0);
+        Color color = new Color(400, 300, 300);
+
+        PointLight point_light = new PointLight(color, pos, 1, 0.0005, 0.000005);
+        DirectionalLight directional = new DirectionalLight(color, new Vector(0, 0, -1));
+
+        ImageWriter imageWriter = new ImageWriter("Glossy test", 500, 500, 600, 600);
+        List<LightSource> lights = new ArrayList<LightSource>();
+        lights.add(point_light);
+        scene.setLights(lights);
+        Render render = new Render(imageWriter, scene);
+        render.renderImage();
+        render.writeToImage();
+    }
+
+    /**
+     * test case for object behind light
+     */
+    @Test
+    public void testShadowLight() {
+        Scene scene = createScene("shadow light test");
+        scene.setDistance(150);
+        Geometries geometries = new Geometries();
+        scene.setGeometries(geometries);
+        Plane plane = new Plane(new Color(0, 10, 0), new Material(0.5, 0.5, 300, 0, 0), new Point3D(0, 20, 60), new Vector(0, 0, -1));
+        Sphere sphere = new Sphere(new Color(0, 0, 20), new Material(0.5, 0, 300, 0, 0), 20, new Point3D(0, 0, -20));
+        geometries.add(plane, sphere);
+
+        Point3D pos = new Point3D(0, 0, 20);
+        Color color = new Color(400, 300, 300);
+
+        PointLight point_light = new PointLight(color, pos, 1, 0.0005, 0.000005);
+
+        ImageWriter imageWriter = new ImageWriter("Shadow light test", 500, 500, 1200, 1200);
         List<LightSource> lights = new ArrayList<LightSource>();
         lights.add(point_light);
         scene.setLights(lights);
