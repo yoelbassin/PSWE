@@ -18,6 +18,7 @@ public class Scene {
     List<LightSource> _lights = new ArrayList<>();
     Camera camera;
     double distance;
+    int sampleCount;
     // ***************** Constructors ********************** //
 
     /**
@@ -29,6 +30,24 @@ public class Scene {
         sceneName = name;
     }
     // ***************** Getters/Setters ********************** //
+
+    /**
+     * setter of the scene ray samples count
+     *
+     * @param sampleCount
+     */
+    public void setSampleCount(int sampleCount) {
+        this.sampleCount = sampleCount;
+    }
+
+    /**
+     * getter of the scene ray samples count
+     *
+     * @return sceneName
+     */
+    public int getSampleCount() {
+        return sampleCount;
+    }
 
     /**
      * getter of the scene name
