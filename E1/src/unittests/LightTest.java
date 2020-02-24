@@ -14,13 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LightTest {
-	/*
-	 * public Scene createScene(String name) { Scene scene = new Scene(name);
-	 * scene.setCamera(new Camera(new Point3D(0, 0, 0), new Vector(0, -1, 0), new
-	 * Vector(0, 0, 1))); scene.setDistance(200); scene.setAmbient(new
-	 * AmbientLight(new Color(255, 255, 255), 0)); scene.setBackground(Color.BLACK);
-	 * scene.setSampleCount(80); return scene; }
-	 */
+	
 	/**
 	 * test case for lighting
 	 */
@@ -300,6 +294,7 @@ public class LightTest {
 				new Point3D(0, 20, 100), new Vector(0, 1, 0)); // ground
 		Plane plane2 = new Plane(new Color(0, 30, 30), new Material(0.5, 0.5, 1200), //
 				new Point3D(0, 20, 600), new Vector(0, 0, 1)); // background plane
+
 		Sphere sphere = new Sphere(new Color(0, 0, 20), new Material(0.5, 0.5, 1200, 0.5, 0), //
 				20, new Point3D(75, -3, 140)); // sphere 1
 		Sphere sphere2 = new Sphere(new Color(0, 0, 20), new Material(0.5, 0.5, 1200, 0.5, 0), //
@@ -310,9 +305,7 @@ public class LightTest {
 				20, new Point3D(-25, -48, 140)); // sphere 4
 
 		scene.addIntersectable(plane, plane2 //
-				, sphere, sphere2, sphere3, sphere4 //
-//				, square1, square2, square3, square4 //
-		);
+				, sphere, sphere2, sphere3, sphere4);
 
 		Point3D pos = new Point3D(0, -30, 30);
 		Color color = new Color(400, 300, 300);
@@ -328,6 +321,7 @@ public class LightTest {
 		render.setThreads(4);
 		render.renderImage();
 		render.writeToImage();
+
 	}
 
 	/**
@@ -340,10 +334,12 @@ public class LightTest {
 		scene.setDistance(1000);
 		scene.setAmbient(new AmbientLight(new Color(255, 255, 255), 0));
 		scene.setBackground(Color.BLACK);
-		Plane plane = new Plane(new Color(0, 0, 0), new Material(0.5, 0.5, 300, 0.4, 0), //
-				new Point3D(0, 20, 100), new Vector(0, 1, 0)); // ground
+
+		Plane plane = new Plane(new Color(0, 0, 0), new Material(0.5, 0.5, 300, 0.4, 0), new Point3D(0, 20, 100),
+				new Vector(0, 1, 0)); // ground Plane plane2
 		Plane plane2 = new Plane(new Color(0, 30, 30), new Material(0.5, 0.5, 1200), //
 				new Point3D(0, 20, 600), new Vector(0, 0, 1)); // background plane
+
 		Sphere sphere = new Sphere(new Color(0, 0, 20), new Material(0.5, 0.5, 1200, 0.5, 0), //
 				20, new Point3D(75, -3, 140)); // sphere 1
 		Sphere sphere2 = new Sphere(new Color(0, 0, 20), new Material(0.5, 0.5, 1200, 0.5, 0), //
@@ -367,8 +363,8 @@ public class LightTest {
 		Polygon square4 = new Polygon(new Color(0, 0, 0), new Material(0.1, 0.1, 300, 0, 0.8, 0, 2), //
 				new Point3D(-1, 20, 100), new Point3D(-34, 20, 100), new Point3D(-34, -40, 100),
 				new Point3D(-1, -40, 100));
-		scene.addIntersectable(plane, plane2 //
-				, sphere, sphere2, sphere3, sphere4 //
+		scene.addIntersectable(plane, plane2, //
+				sphere, sphere2, sphere3, sphere4 //
 				, square1, square2, square3, square4 //
 		);
 
@@ -383,10 +379,11 @@ public class LightTest {
 		scene.setLights(lights);
 		Render render = new Render(imageWriter, scene);
 		render.setSampleCount(80);
-		render.setThreads(4);
+		render.setThreads(2);
 		render.renderImage();
 		render.writeToImage();
 	}
+
 	/**
 	 * test case for object behind light
 	 */
@@ -397,8 +394,10 @@ public class LightTest {
 		scene.setDistance(1000);
 		scene.setAmbient(new AmbientLight(new Color(255, 255, 255), 0));
 		scene.setBackground(Color.BLACK);
+
 		Plane plane = new Plane(new Color(0, 10, 0), new Material(0.5, 0.5, 300, 0, 0), new Point3D(0, 20, 60),
 				new Vector(0, 0, -1));
+
 		Sphere sphere = new Sphere(new Color(0, 0, 20), new Material(0.5, 0, 300, 0, 0), 20, new Point3D(0, 0, -20));
 		scene.addIntersectable(plane, sphere);
 
