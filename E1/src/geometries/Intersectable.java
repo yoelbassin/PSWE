@@ -69,4 +69,5 @@ public interface Intersectable {
 	 * @return intersection point
 	 */
 	List<GeoPoint> findIntersections(Ray ray);
+	BoundaryVolume boundaryVolume();
 }
