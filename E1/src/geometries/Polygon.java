@@ -1,5 +1,6 @@
 package geometries;
 
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -113,5 +114,42 @@ public class Polygon extends Geometry {
                 return null;
         Point3D intersection = intersections.get(0).point;
         return Arrays.asList(new GeoPoint(this, intersection));
+    }
+    
+    public BoundaryVolume boundaryVolume() {
+    	double minX= _points.get(0).getX().get();
+    	double maxX = minX;
+    	double minY= _points.get(0).getY().get();
+    	double maxY = minY;
+    	double minZ= _points.get(0).getZ().get();
+    	double maxZ = minZ;
+    	
+    	double x = 0;
+    	double y=0;
+    	double z =0;
+    	for(Point3D p : _points)
+    	{
+    		x=p.getX().get();
+    		y=p.getY().get();
+    		z=p.getZ().get();
+    		if(x<minX)
+    			minX=x;
+    		if(x>maxX)
+    			maxX=x;
+    		if(y<minY)
+    			minY=y;
+    		if(y>maxY)
+    			maxY=y;
+    		if(z<minZ)
+    			minZ=z;
+    		if(z>maxZ)
+    			maxZ=z;
+    	}
+    	
+    	return new BoundaryVolume(new Point3D(minX,minY,minZ)//
+    			,new Point3D(maxX,maxY,maxZ),new Geometries(this));
+    }
+}
+(this, intersection));
     }
 }
