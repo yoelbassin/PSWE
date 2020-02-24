@@ -1,144 +1,152 @@
 package geometries;
 
+
 import java.util.Arrays;
 import java.util.List;
 
-import primitives.*;
-
 import static primitives.Util.*;
 
+import primitives.*;
+
 /**
- * Class represents 3D space plane with a normal and a 3D space point in the
- * plane.
+ * Class represents 3D space polygon with more than three vertexes.
  *
  * @author bassi
  * @author asaf0
  */
-public class Plane extends Geometry {
-
-    private Point3D _p;
-    private Vector _normal;
+public class Polygon extends Geometry {
+    List<Point3D> _points;
+    Plane _plane;
     // ***************** Constructors ********************** //
 
     /**
-     * Constructs a plane with a point and normal vector
+     * Constructs a polygon from set of points - polygon's vertices. NB: the points
+     * must be in the same plane
      *
-     * @param _p,      the base point of the normal
-     * @param _normal, the normal vector to the plane
+     * @param points vertices
+     * @throws IllegalArgumentException if less than 3 points or points are not in
+     *                                  the same plane
      */
-    public Plane(Point3D _p, Vector _normal) {
-        this._p = _p;
-        this._normal = _normal.normalized();
+    public Polygon(Point3D... points) {
+        if (points.length < 3)
+            throw new IllegalArgumentException("Polygon must have at least 3 vertices");
+        Point3D p1 = points[0];
+        Point3D p2 = points[1];
+        Point3D p3 = points[2];
+        _plane = new Plane(p1, p2, p3);
+        Vector n = _plane.getNormal();
+        for (int i = 3; i < points.length; ++i)
+            if (!isZero(p1.subtract(points[i]).dotProduct(n)))
+                throw new IllegalArgumentException("Polygon's vertices must resize in the same plane");
+        _points = Arrays.asList(points);
     }
 
     /**
-     * Constructs a plane using three points in the space
+     * Constructs a polygon from set of points - polygon's vertices and a color. NB: the points
+     * must be in the same plane
      *
-     * @param p1 is first point
-     * @param p2 is second point
-     * @param p3 is third point
+     * @param emission the color of the polygon
+     * @param points   vertices
+     * @throws IllegalArgumentException if less than 3 points or points are not in
+     *                                  the same plane
      */
-    public Plane(Point3D p1, Point3D p2, Point3D p3) {
-        this._p = p1;
-        this._normal = ((p3.subtract(p1)).crossProduct(p2.subtract(p1))).normalize();
-    }
-
-    /**
-     * Constructs a plane with a point, normal vector and a color
-     *
-     * @param emission the color of the plane
-     * @param _p,      the base point of the normal
-     * @param _normal, the normal vector to the plane
-     */
-    public Plane(Color emission, Point3D _p, Vector _normal) {
-        this(_p, _normal);
+    public Polygon(Color emission, Point3D... points) {
+        this(points);
         this.emission = emission;
     }
 
     /**
-     * Constructs a plane using three points in the space and a color
+     * Constructs a polygon from set of points - polygon's vertices and a color. NB: the points
+     * must be in the same plane
      *
-     * @param emission the color of the plane
-     * @param p1       is first point
-     * @param p2       is second point
-     * @param p3       is third point
+     * @param emission the color of the polygon
+     * @param material the material of the polygon
+     * @param points   vertices
+     * @throws IllegalArgumentException if less than 3 points or points are not in
+     *                                  the same plane
      */
-    public Plane(Color emission, Point3D p1, Point3D p2, Point3D p3) {
-        this(p1, p2, p3);
-        this.emission = emission;
-    }
-
-    /**
-     * Constructs a plane with a point, normal vector and a color
-     *
-     * @param emission the color of the plane
-     * @param material the material of the plane
-     * @param _p,      the base point of the normal
-     * @param _normal, the normal vector to the plane
-     */
-    public Plane(Color emission, Material material, Point3D _p, Vector _normal) {
-        this(emission, _p, _normal);
+    public Polygon(Color emission, Material material, Point3D... points) {
+        this(emission, points);
         this.material = material;
-    }
-
-    /**
-     * Constructs a plane using three points in the space and a color
-     *
-     * @param emission the color of the plane
-     * @param material the material of the plane
-     * @param p1       is first point
-     * @param p2       is second point
-     * @param p3       is third point
-     */
-    public Plane(Color emission, Material material, Point3D p1, Point3D p2, Point3D p3) {
-        this(emission, p1, p2, p3);
-        this.material = material;
-    }
-    // ***************** Getters/Setters ********************** //
-
-    /**
-     * Gets the normal of the plane at a certain point
-     *
-     * @param p is the point of the normal
-     * @return the normal of the plane
-     */
-    public Vector getNormal(Point3D p) {
-        return _normal;
-    }
-
-    /**
-     * Gets the normal of the plane
-     *
-     * @return the normal of the plane
-     */
-    public Vector getNormal() {
-        return _normal;
     }
     // ***************** Operations ******************** //
 
     /**
-     * finds intersections of the ray with the plane
+     * Gets the normal of the polygon at a certain point
+     *
+     * @return the normal of the plane of the polygon
+     */
+    public Vector getNormal(Point3D p) {
+        return _plane.getNormal(p);
+    }
+
+    /**
+     * finds intersections of the ray with the polygon
      *
      * @param ray
      * @return intersection point
      */
     public List<GeoPoint> findIntersections(Ray ray) {
+        List<GeoPoint> intersections = this._plane.findIntersections(ray);
+        if (intersections == null) // if there are no intersections with the plane, or the ray's
+            // base is on the triangle return null
+            return null;
         Point3D p0 = ray.getBasePoint();
-        Vector v = ray.getDir();
-        double vn = alignZero(this._normal.dotProduct(v));
-        // if the ray is ray in parallel to the plane (orthogonal to the normal) return
-        // null
-        if (vn == 0)
-            return null;
-        Vector pp0 = null;
-        try {
-            pp0 = this._p.subtract(p0);
-        } catch (Exception e) {
-            // if the ray's base is equal to the origin point of the plane return null
-            return null;
-        }
-        double t = alignZero(this._normal.dotProduct(pp0) / vn);
-        // if the plane is behind the ray, or the ray's base is on the plane return null
-        return (t <= 0) ? null : Arrays.asList(new GeoPoint(this, p0.add(v.scale(t)))); // return the intersection
+        int size = this._points.size();
+        Vector[] v = new Vector[size];
+        Vector[] n = new Vector[size];
+        double[] un = new double[size];
+        // vi = pi - p0
+        for (int i = 0; i < size; ++i)
+            v[i] = _points.get(i).subtract(p0);
+        // Ni = Vi x Vi+1
+        for (int i = 0; i < size; ++i)
+            n[i] = v[i].crossProduct(v[(i < size - 1) ? i + 1 : 0]).normalize();
+        Vector u = intersections.get(0).getPoint().subtract(p0);
+        // uni = u*Ni
+        for (int i = 0; i < size; ++i)
+            if ((un[i] = alignZero(u.dotProduct(n[i]))) == 0)
+                return null;
+        double sign = un[0];
+        for (int i = 1; i < size; ++i)
+            // if the N1...Nn do not have the same sign, return null
+            if ((sign < 0 && un[i] > 0) || (sign > 0 && un[i] < 0))
+                return null;
+        Point3D intersection = intersections.get(0).point;
+        return Arrays.asList(new GeoPoint(this, intersection));
+    }
+    
+    public BoundaryVolume boundaryVolume() {
+    	double minX= _points.get(0).getX().get();
+    	double maxX = minX;
+    	double minY= _points.get(0).getY().get();
+    	double maxY = minY;
+    	double minZ= _points.get(0).getZ().get();
+    	double maxZ = minZ;
+    	
+    	double x = 0;
+    	double y=0;
+    	double z =0;
+    	for(Point3D p : _points)
+    	{
+    		x=p.getX().get();
+    		y=p.getY().get();
+    		z=p.getZ().get();
+    		if(x<minX)
+    			minX=x;
+    		if(x>maxX)
+    			maxX=x;
+    		if(y<minY)
+    			minY=y;
+    		if(y>maxY)
+    			maxY=y;
+    		if(z<minZ)
+    			minZ=z;
+    		if(z>maxZ)
+    			maxZ=z;
+    	}
+    	
+    	return new BoundaryVolume(new Point3D(minX,minY,minZ)//
+    			,new Point3D(maxX,maxY,maxZ),new Geometries(this));
     }
 }
