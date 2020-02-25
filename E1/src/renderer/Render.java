@@ -1,6 +1,9 @@
 package renderer;
 
 import elements.LightSource;
+import geometries.BoundaryVolume;
+import geometries.Geometries;
+import geometries.Intersectable;
 import primitives.Color;
 import primitives.Material;
 import primitives.Point3D;
@@ -11,6 +14,7 @@ import scene.Scene;
 import static geometries.Intersectable.GeoPoint;
 import static primitives.Util.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;
@@ -25,7 +29,8 @@ public class Render {
 	private ImageWriter image;
 	private Scene scene;
 	private int threads = 1;
-    int _sampleCount;
+	int _sampleCount;
+	boolean _usingBoundaryVolume = false;
 	// ***************** Constructors ********************** //
 
 	/**
@@ -38,8 +43,8 @@ public class Render {
 		this.image = image;
 		this.scene = scene;
 	}
-	
-/**
+
+	/**
 	 * setter of numberof threads
 	 *
 	 * @param n - the number of threads
@@ -48,26 +53,35 @@ public class Render {
 		threads = n;
 	}
 
+	/**
+	 * setter of the ray samples count
+	 *
+	 * @param sampleCount
+	 */
+	public void setSampleCount(int sampleCount) {
+		_sampleCount = sampleCount;
+	}
 
-    /**
-     * setter of the ray samples count
-     *
-     * @param sampleCount
-     */
-	public void setSampleCount(int sampleCount)
-	{
-		sampleCount = _sampleCount;
+	public int getSampleCount() {
+		return _sampleCount;
 	}
-	public int getSampleCount ()
-	{
-	    return _sampleCount;
+
+	/**
+	 * Setter of boundary volume
+	 * 
+	 * @param usingBoundaryVolume
+	 */
+	public void setUsingBoundaryVolume(boolean usingBoundaryVolume) {
+		_usingBoundaryVolume = usingBoundaryVolume;
 	}
+
 	private volatile int progr = 0;
 	private volatile int percentage = 0;
 	private int pixels;
+
 	private synchronized void progress() {
 		progr += 100;
-		int temp = (int)((double)progr / pixels);
+		int temp = (int) ((double) progr / pixels);
 		if (temp != percentage) {
 			percentage = temp;
 			System.out.println("" + percentage + "%");
@@ -103,9 +117,9 @@ public class Render {
 						GeoPoint closestPoint = findClosestIntersection(ray);
 						image.writePixel(j, fi, //
 								closestPoint == null ? bg : calcColor(closestPoint, ray).getColor());
-						//progress();
+						progress();
 					}
-					//System.out.println("Row " + fi + ", thread# " + Thread.currentThread().getId());
+					System.out.println("Row " + fi + ", thread# " + Thread.currentThread().getId());
 				});
 			else {
 				for (int j = nx - 1; j >= 0; --j) {
@@ -115,9 +129,10 @@ public class Render {
 					GeoPoint closestPoint = findClosestIntersection(ray);
 					image.writePixel(j, fi, //
 							closestPoint == null ? bg : calcColor(closestPoint, ray).getColor());
-					//progress();
+					// progress();
 				}
-				//System.out.println("Row " + fi + ", thread# " + Thread.currentThread().getId());
+				// System.out.println("Row " + fi + ", thread# " +
+				// Thread.currentThread().getId());
 			}
 		}
 
@@ -131,14 +146,14 @@ public class Render {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				//System.out.println("Still working... " + ++minutes + " minutes");
+				// System.out.println("Still working... " + ++minutes + " minutes");
 			} while (!stopped);
 		}
 		long finish = System.currentTimeMillis();
 		long elapsed = finish - start;
-		
-		double seconds = (double)elapsed / 1000;
-		int minutes = (int)(seconds / 60);
+
+		double seconds = (double) elapsed / 1000;
+		int minutes = (int) (seconds / 60);
 		double secs = seconds - minutes * 60;
 		int hours = minutes / 60;
 		minutes %= 60;
@@ -229,17 +244,19 @@ public class Render {
 		return color;
 	}
 
-	//make d can be changed
-	private int  d = 10 ;
+	// make d can be changed
+	private int d = 10;
+
 	/**
 	 * setter of parameter d
-	 * @param distance - p0pc the distance in which 
-	 * we make create cycle of random rays
+	 * 
+	 * @param distance - p0pc the distance in which we make create cycle of random
+	 *                 rays
 	 */
-	public void setterD(int distance)
-	{
+	public void setterD(int distance) {
 		d = distance;
 	}
+
 	private static final Random RANDOM = new Random(System.currentTimeMillis());
 
 	/**
@@ -283,7 +300,7 @@ public class Render {
 		}
 		Vector u = v.crossProduct(dir).normalize();
 
-		 // HARDCODED ?!?!?!
+		// HARDCODED ?!?!?!
 		Point3D pc = p0.add(dir.scale(d));
 		for (int i = this.getSampleCount() - 1; i > 0; --i) {
 			Point3D p;
@@ -356,13 +373,17 @@ public class Render {
 		Vector epsVector = n.scale(n.dotProduct(lightDirection) > 0 ? EPS : -EPS);
 		Point3D point = geopoint.point.add(epsVector);
 		Ray lightRay = new Ray(point, lightDirection);
-		List<GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
+		List<GeoPoint> intersections = splitFindIntersection(lightRay);
 		if (intersections == null)
 			return 1;
 		double ktr = 1;
-		for (GeoPoint gp : intersections)
-			if (gp.point.distance(geopoint.point) <= d)
-				ktr *= gp.geometry.getMaterial().getKt();
+		try {
+			for (GeoPoint gp : intersections)
+				if (gp.point.distance(geopoint.point) <= d)
+					ktr *= gp.geometry.getMaterial().getKt();
+		} catch (Exception e) {
+			int i = 1;
+		}
 		return ktr;
 	}
 
@@ -379,9 +400,9 @@ public class Render {
 		Vector r = v.subtract(n.scale(v.dotProduct(n) * 2));
 		Point3D newPoint = point.add(n.scale(n.dotProduct(r) > 0 ? EPS : -EPS));
 		Ray ray = new Ray(newPoint, r);
-		if (ray.getDir().dotProduct(n) > 0)
-		 return ray;
-		return null;
+		/// if (ray.getDir().dotProduct(n) > 0)
+		return ray;
+		/// return null;
 	}
 
 	/**
@@ -416,19 +437,81 @@ public class Render {
 	 * @return the closest geometry intersection point to the camera
 	 */
 	private GeoPoint findClosestIntersection(Ray ray) {
-		List<GeoPoint> points = scene.getGeometries().findIntersections(ray);
+		List<GeoPoint> points = splitFindIntersection(ray);
 		if (points == null)
 			return null;
 		Point3D p0 = ray.getBasePoint();
 		double minValue = Double.POSITIVE_INFINITY;
 		GeoPoint minPoint = null;
-		for (GeoPoint p : points) {
-			double d0 = p.point.distance(p0);
-			if (d0 < minValue) {
-				minValue = d0;
-				minPoint = p;
+		try {
+			for (GeoPoint p : points) {
+				double d0 = p.point.distance(p0);
+				if (d0 < minValue) {
+					minValue = d0;
+					minPoint = p;
+				}
 			}
+		} catch (Exception e) {
+			int x = 1;
 		}
+
 		return minPoint;
 	}
+
+	// for saving the time of new list creation several times
+	private List<GeoPoint> intersectionsBVH = new ArrayList<GeoPoint>();
+
+	/**
+	 * travel around the geometries tree whether the ray is inside the box or not
+	 * thus , build the following intersections
+	 * 
+	 * @param geometries - Geometries
+	 */
+	public void GeometriesBVH(Geometries geometries, Ray ray) {
+		if (geometries.boundaryVolume().boundingIntersection(ray)) {
+			if (geometries.getAmount() == 1) {
+				BoundaryVolume boundary = geometries.boundaryVolume();
+				if (boundary.boundingIntersection(ray) || boundary == null)// if plane
+					if (geometries.findIntersections(ray) != null)
+						intersectionsBVH.addAll(geometries.findIntersections(ray));
+				return;
+			}
+			for (Intersectable geo : geometries.getShapes()) {
+				GeometriesBVH(new Geometries(geo), ray);
+				return;
+			}
+		} else {
+			return;
+		}
+
+	}
+
+	/**
+	 * in bvh accelartion the code run up faster then for comparing the run time ,
+	 * the programmer create this method
+	 * 
+	 * @param ray - ray in space
+	 * @return list of geometry points
+	 */
+	public List<GeoPoint> splitFindIntersection(Ray ray) {
+		
+		Geometries geometries = scene.getGeometries();
+		if (_usingBoundaryVolume) {
+			/*
+			GeometriesBVH(geometries, ray);
+			return intersectionsBVH;
+*/
+			
+			if (geometries.boundaryVolume().boundingIntersection(ray)) {
+				System.out.println("1");
+				return geometries.findIntersections(ray);
+			}
+			return null;
+			
+
+		} else {
+			return geometries.findIntersections(ray);
+		}
+	}
 }
+
