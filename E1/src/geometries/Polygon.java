@@ -147,9 +147,7 @@ public class Polygon extends Geometry {
     	}
     	
     	return new BoundaryVolume(new Point3D(minX,minY,minZ)//
-    			,new Point3D(maxX,maxY,maxZ),new Geometries(this));
+    			,new Point3D(maxX,maxY,maxZ));
     }
 }
-(this, intersection));
-    }
-}
+
