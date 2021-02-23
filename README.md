@@ -20,3 +20,7 @@ abstract description of it
 
 • To understand and apply techniques supporting Agile Development: Refactoring, Testfirst
 programming and Pair programming.
+
+
+
+![Glossy surfaces](https://raw.githubusercontent.com/yoelbassin/PSWE/master/Images/Glossy%20test.jpg)
