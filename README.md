@@ -5,3 +5,5 @@ involved using ray tracing (light source, rays, reflections, refractions, color,
 
 
 ![Glossy surfaces](https://raw.githubusercontent.com/yoelbassin/PSWE/master/Images/Glossy%20test.jpg)
+
+![Glossy](https://raw.githubusercontent.com/yoelbassin/PSWE/master/Images/Glossy.jpeg)
